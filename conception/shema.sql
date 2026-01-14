@@ -55,6 +55,23 @@ CREATE TABLE briefs (
     FOREIGN KEY (sprint_id) REFERENCES sprints(id) ON DELETE CASCADE
 );
 
+CREATE TABLE rendu (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    text text,
+    link VARCHAR(255),
+    date_soumission DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE rendu_etudiant (
+    etudiant_id INT,
+    rendu_id INT,
+    brief_id INT,
+    PRIMARY KEY (etudiant_id, rendu_id),
+    FOREIGN KEY (etudiant_id) REFERENCES etudiants(user_id),
+    FOREIGN KEY (rendu_id) REFERENCES rendu(id),
+    FOREIGN KEY (brief_id) REFERENCES briefs(id)
+);
+
 CREATE TABLE competences (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nom VARCHAR(255) NOT NULL
