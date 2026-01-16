@@ -7,6 +7,7 @@ class Router{
     public function get($path, $controller, $role)
     {
         $this->route['GET'][$path][$role] = $controller; 
+       //var_dump($this->route['GET'][$path][$role]);
     }
 
     public function post($path, $controller, $role) {
@@ -18,18 +19,19 @@ class Router{
     {
         $method = $_SERVER['REQUEST_METHOD'];
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        $role = $_SESSION['role'] ?? 'Visiteur';
+        $role = $_SESSION['role'] ?? 'visiteur';
 
-        if(!isset($this->Route[$method][$path][$role])) {
+        echo $method;
+
+        if(!isset($role)) {
             require_once __DIR__ . "/../views/404.blade.php";
             return;
         }
-
-        $action = $this->route[$method][$path][$role];        
-        
+        $action = $this->route[$method][$path][$role];
+                
         list($controllerClass, $methodPart) = explode("@", $action);
 
-        $fullClass = "\\Controllers\\" . $controllerClass;
+        $fullClass = "\\" . $controllerClass;
 
         $controllerObj = new $fullClass();
         $controllerObj->$methodPart();  

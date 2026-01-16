@@ -28,7 +28,8 @@ return array(
     'Illuminate\\Config\\' => array($vendorDir . '/illuminate/config'),
     'Illuminate\\Bus\\' => array($vendorDir . '/illuminate/bus'),
     'Doctrine\\Inflector\\' => array($vendorDir . '/doctrine/inflector/src'),
-    'Core\\' => array($baseDir . '/src/Core'),
+    'Core\\' => array($baseDir . '/Core'),
+    'Controllers\\' => array($baseDir . '/Controllers'),
     'Carbon\\Doctrine\\' => array($vendorDir . '/carbonphp/carbon-doctrine-types/src/Carbon/Doctrine'),
     'Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),
 );

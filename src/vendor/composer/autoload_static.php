@@ -67,6 +67,7 @@ class ComposerStaticInit7c0971104c324d14ada2aefd36456193
         'C' => 
         array (
             'Core\\' => 5,
+            'Controllers\\' => 12,
             'Carbon\\Doctrine\\' => 16,
             'Carbon\\' => 7,
         ),
@@ -166,7 +167,11 @@ class ComposerStaticInit7c0971104c324d14ada2aefd36456193
         ),
         'Core\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/src/Core',
+            0 => __DIR__ . '/../..' . '/Core',
+        ),
+        'Controllers\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Controllers',
         ),
         'Carbon\\Doctrine\\' => 
         array (
