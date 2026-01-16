@@ -1,0 +1,12 @@
+{
+    "name": "youcode/sprint",
+    "autoload": {
+        "psr-4": {
+            "Core\\": "src/Core/"
+        }
+    },
+    "require": {
+        "jenssegers/blade": "^2.0",
+        "eftec/bladeone": "^4.19"
+    }
+}
