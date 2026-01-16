@@ -36,7 +36,7 @@
     <div class="animate-fade-in glow-pulse bg-black/70 backdrop-blur-xl p-8 md:p-10 rounded-3xl border border-cyan-400/50 shadow-[0_0_30px_rgba(0,0,0,0.5)] w-full max-w-md">
         
         <header class="text-center mb-8">
-            <img src="../assets/logoysprint.png" width="100px" height="100px" alt="">
+            <img src="https://github.com/aminelebrini/YouCode-Sprint/blob/main/src/assets/logoysprint.png?raw=true" width="100px" height="100px" alt="">
             <div class="h-1 w-12 bg-cyan-500 mx-auto rounded-full mb-4"></div>
             <p class="text-cyan-100/60 text-sm italic font-medium">Ready to code? Accelerate your future.</p>
         </header>
