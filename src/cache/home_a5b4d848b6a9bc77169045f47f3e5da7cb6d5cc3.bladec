@@ -39,7 +39,7 @@
  <header class="text-center mb-10 relative">
  <h1 class="text-white text-4xl font-black italic uppercase tracking-tighter mb-1 transition-all duration-500 hover:tracking-normal">
  YouCode <br>
- <span class="text-cyan-400 inline-block translate-x-4">Sprint</span>
+ <span class="text-cyan-400 inline-block ml-[20%]">Sprint</span>
  </h1>
  <div class="h-[2px] w-[50%] bg-cyan-500 mx-auto rounded-full"></div>
  </header>
