@@ -10,10 +10,10 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-COPY . /var/www/html/
+COPY src/ /var/www/html/
 
-RUN chown -R www-data:www-data /var/www/html
+RUN mkdir -p /var/www/html/src/cache \ && chown -R www-data:www-data /var/www/html \ && chmod -R 755 /var/www/html
 
-RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
+RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/src/public|g' /etc/apache2/sites-available/000-default.conf
 
 EXPOSE 80

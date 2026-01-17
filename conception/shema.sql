@@ -1,14 +1,17 @@
+CREATE TYPE user_role AS ENUM ('Admin', 'Formateur', 'Etudiant');
+CREATE TYPE niveau AS ENUM('IMITER', 'S_ADAPTER', 'TRANSPOSER');
+
 CREATE TABLE users (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id SERIAL PRIMARY KEY,
     firstname VARCHAR(100) NOT NULL,
     lastname VARCHAR(100) NOT NULL,
     email VARCHAR(150) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    role ENUM('Admin', 'Formateur', 'Etudiant') NOT NULL
+    role user_role NOT NULL
 );
 
 CREATE TABLE classes (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id SERIAL PRIMARY KEY,
     nom VARCHAR(100) NOT NULL,
     nombre INT NOT NULL,
     promo VARCHAR(100) NOT NULL,
@@ -16,86 +19,70 @@ CREATE TABLE classes (
 );
 
 CREATE TABLE sprints (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id SERIAL PRIMARY KEY,
     nom VARCHAR(100) NOT NULL,
     date_debut DATE,
     date_fin DATE,
-    classe_id INT,
-    FOREIGN KEY (classe_id) REFERENCES classes(id) ON DELETE CASCADE
+    classe_id INT REFERENCES classes(id) ON DELETE CASCADE
 );
 
 CREATE TABLE etudiants (
-    user_id INT PRIMARY KEY,
+    user_id INT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
     username VARCHAR(50) UNIQUE,
     level VARCHAR(50),
-    classe_id INT,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (classe_id) REFERENCES classes(id)
+    classe_id INT REFERENCES classes(id)
 );
 
 CREATE TABLE formateurs (
-    user_id INT PRIMARY KEY,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    user_id INT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE formateur_classe (
-    formateur_id INT,
-    classe_id INT,
-    PRIMARY KEY (formateur_id, classe_id),
-    FOREIGN KEY (formateur_id) REFERENCES formateurs(user_id),
-    FOREIGN KEY (classe_id) REFERENCES classes(id)
+    formateur_id INT REFERENCES formateurs(user_id),
+    classe_id INT REFERENCES classes(id),
+    PRIMARY KEY (formateur_id, classe_id)
 );
 
 CREATE TABLE briefs (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id SERIAL PRIMARY KEY,
     nom VARCHAR(255) NOT NULL,
     description TEXT,
     type VARCHAR(50), 
-    sprint_id INT,
-    FOREIGN KEY (sprint_id) REFERENCES sprints(id) ON DELETE CASCADE
+    sprint_id INT REFERENCES sprints(id) ON DELETE CASCADE
 );
 
 CREATE TABLE rendu (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id SERIAL PRIMARY KEY,
     text text,
     link VARCHAR(255),
-    date_soumission DATETIME DEFAULT CURRENT_TIMESTAMP
+    date_soumission TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE rendu_etudiant (
-    etudiant_id INT,
-    rendu_id INT,
-    brief_id INT,
-    PRIMARY KEY (etudiant_id, rendu_id),
-    FOREIGN KEY (etudiant_id) REFERENCES etudiants(user_id),
-    FOREIGN KEY (rendu_id) REFERENCES rendu(id),
-    FOREIGN KEY (brief_id) REFERENCES briefs(id)
+    etudiant_id INT REFERENCES etudiants(user_id) ON DELETE CASCADE,
+    rendu_id INT REFERENCES rendu(id) ON DELETE CASCADE,
+    brief_id INT REFERENCES briefs(id) ON DELETE CASCADE,
+    PRIMARY KEY (etudiant_id, rendu_id)
 );
 
 CREATE TABLE competences (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id SERIAL PRIMARY KEY,
     nom VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE competence_brief (
-    brief_id INT,
-    competence_id INT,
-    PRIMARY KEY (brief_id, competence_id),
-    FOREIGN KEY (brief_id) REFERENCES briefs(id) ON DELETE CASCADE,
-    FOREIGN KEY (competence_id) REFERENCES competences(id) ON DELETE CASCADE
+    brief_id INT REFERENCES briefs(id) ON DELETE CASCADE,
+    competence_id INT REFERENCES competences(id) ON DELETE CASCADE,
+    PRIMARY KEY (brief_id, competence_id)
 );
 
 CREATE TABLE evaluations (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    id SERIAL PRIMARY KEY,
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     commentaire TEXT,
-    niveau_maitrise ENUM('IMITER', 'S_ADAPTER', 'TRANSPOSER') NOT NULL,
-    etudiant_id INT,
-    formateur_id INT,
-    brief_id INT,
-    competence_id INT,
-    FOREIGN KEY (etudiant_id) REFERENCES etudiants(user_id),
-    FOREIGN KEY (formateur_id) REFERENCES formateurs(user_id),
-    FOREIGN KEY (brief_id) REFERENCES briefs(id),
-    FOREIGN KEY (competence_id) REFERENCES competences(id)
+    niveau_maitrise niveau NOT NULL,
+    etudiant_id INT REFERENCES etudiants(user_id),
+    formateur_id INT REFERENCES formateurs(user_id),
+    brief_id INT REFERENCES briefs(id),
+    competence_id INT REFERENCES competences(id)
 );
