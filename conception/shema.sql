@@ -86,3 +86,5 @@ CREATE TABLE evaluations (
     brief_id INT REFERENCES briefs(id),
     competence_id INT REFERENCES competences(id)
 );
+
+--docker exec -it my_postgres psql -U postgres -d youcode_sprint
