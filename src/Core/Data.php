@@ -8,12 +8,12 @@ use PDOException;
 class Data
 {
     private static ?Data $instance = null;
-    private PDO $connection;
+    private static ?PDO $connection = null;
 
     public function __construct()
     {
         try{
-            $this->connection = new PDO(
+            self::$connection = new PDO(
                 "pgsql:host={$_ENV['DB_HOST']};port={$_ENV['DB_PORT']};dbname={$_ENV['DB_NAME']}",$_ENV['DB_USER'],$_ENV['DB_PASSWORD'],
                 [
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -21,7 +21,7 @@ class Data
                 ]
             );
 
-            if($this->connection())
+            if(self::$connection)
             {
                 echo "wa33333";
             }

@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:15
+    image: postgres:17
     container_name: my_postgres
     restart: always
     environment:
@@ -26,14 +26,17 @@ services:
       - db
 
   web:
-    build: .
+    image: youcode-sprint-image
     container_name: youcode-sprint
     ports:
       - "8085:80"
     volumes:
       - ./src:/var/www/html
+      
     depends_on:
       - db
-
+    dns:
+    - 8.8.8.8
+    - 1.1.1.1
 volumes:
   db_data:

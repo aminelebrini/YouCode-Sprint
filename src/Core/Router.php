@@ -3,6 +3,11 @@
 namespace Core;
 class Router{
     private $route = [];
+    private $userService;
+
+    public function __construct($userService) {
+        $this->userService = $userService;
+    }
 
     public function get($path, $controller, $role)
     {
@@ -21,20 +26,24 @@ class Router{
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $role = $_SESSION['role'] ?? 'visiteur';
 
-        echo $method;
-
-        if(!isset($role)) {
-            require_once __DIR__ . "/../views/404.blade.php";
-            return;
+        if (!isset($this->route[$method][$path][$role])) {
+            http_response_code(404);
+            die("Page introuvable (404)");
         }
+        
         $action = $this->route[$method][$path][$role];
                 
         list($controllerClass, $methodPart) = explode("@", $action);
 
         $fullClass = "\\" . $controllerClass;
 
-        $controllerObj = new $fullClass();
-        $controllerObj->$methodPart();  
+        if (class_exists($fullClass)) {
+
+        $controllerObj = new $fullClass($this->userService);
+            $controllerObj->$methodPart();
+        } else {
+            die("Controller $fullClass malqynahch.");
+        } 
     }
 }
 ?>

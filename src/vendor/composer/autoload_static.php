@@ -22,10 +22,19 @@ class ComposerStaticInit7c0971104c324d14ada2aefd36456193
             'Symfony\\Polyfill\\Php80\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Ctype\\' => 23,
+            'Services\\' => 9,
+        ),
+        'R' => 
+        array (
+            'Repository\\' => 11,
         ),
         'P' => 
         array (
             'PhpOption\\' => 10,
+        ),
+        'M' => 
+        array (
+            'Models\\' => 7,
         ),
         'G' => 
         array (
@@ -59,9 +68,21 @@ class ComposerStaticInit7c0971104c324d14ada2aefd36456193
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
+        'Services\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Services',
+        ),
+        'Repository\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Repository',
+        ),
         'PhpOption\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
+        ),
+        'Models\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Models',
         ),
         'GrahamCampbell\\ResultType\\' => 
         array (

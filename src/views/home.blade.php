@@ -44,7 +44,7 @@
         <div class="h-[2px] w-[50%] bg-cyan-500 mx-auto rounded-full"></div>
     </header>
 
-    <form action="/login" method="POST" class="space-y-6">
+    <form action="/get_profile" method="POST" class="space-y-6">
         <div class="relative group">
             <label class="text-cyan-400/60 text-[9px] uppercase font-black mb-1.5 block ml-4 tracking-[0.2em] group-focus-within:text-cyan-400 transition-colors">Identifiant YouCode</label>
             <input type="text" name="email" required

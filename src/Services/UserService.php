@@ -1,6 +1,7 @@
 <?php
+    namespace Services;
 
- use Repository\UserRepository;
+    use Repository\UserRepository;
 
 class UserService{
     private $Repository;

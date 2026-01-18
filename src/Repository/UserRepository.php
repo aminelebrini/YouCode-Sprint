@@ -3,6 +3,7 @@
     namespace Repository;
 
     use Core\Data;
+    use Models\User;
 
     class UserRepository{
 
@@ -17,8 +18,20 @@
             $query = "SELECT * FROM users WHERE email = ?";
             $statement = $this->conn->prepare($query);
             $statement->execute([$email]);
+            $user = $statement->fetchAll();
 
-            return $statement->fetchAll();
+            $AllUser = [];
+
+            foreach($user as $us)
+            {
+                $AllUser = new User(
+                        $us['firstname'],
+                        $us['lastname'],
+                        $us['email'],
+                        $us['password'],
+                        $us['role'],
+                    );
+            }
         }
     }
 ?>
