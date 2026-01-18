@@ -4,20 +4,23 @@
     use Repository\UserRepository;
 
 class UserService{
-    private $Repository;
+    private  $UserRepository;
+
+    public function __construct()
+    {
+        $this->UserRepository = new UserRepository();
+    }
 
     public function login($email, $password)
     {
-        $userData = $this->Repository->findByEmail($email);
+        $user = $this->UserRepository->findByEmail($email);
 
 
-        if ($userData && password_verify($password, $userData['password'])) {
-            return $userData;
+        if ($user && $user->getPassword() === $password) {
+            return $user;
         }
         return null;
     }
-
-    
 }
 
 ?>

@@ -5,6 +5,7 @@
     use Core\Data;
     use Models\User;
 
+    
     class UserRepository{
 
         private $conn;
@@ -13,25 +14,26 @@
             $this->conn = Data::getInstance()->connection();
         }
 
-        public function findByEmail($email)
+        public function findByEmail($email = null)
         {
             $query = "SELECT * FROM users WHERE email = ?";
             $statement = $this->conn->prepare($query);
             $statement->execute([$email]);
-            $user = $statement->fetchAll();
+            $user = $statement->fetch();
 
             $AllUser = [];
 
-            foreach($user as $us)
-            {
+            if($user){
                 $AllUser = new User(
-                        $us['firstname'],
-                        $us['lastname'],
-                        $us['email'],
-                        $us['password'],
-                        $us['role'],
+                        $user['id'],
+                        $user['firstname'],
+                        $user['lastname'],
+                        $user['email'],
+                        $user['password'],
+                        $user['role'],
                     );
             }
+            return $AllUser;
         }
     }
 ?>

@@ -23,7 +23,7 @@ class Data
 
             if(self::$connection)
             {
-                echo "wa33333";
+                return "hhhh";
             }
         }catch(PDOException $e)
         {

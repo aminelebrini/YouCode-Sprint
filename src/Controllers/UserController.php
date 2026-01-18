@@ -11,18 +11,18 @@ use Models\User;
     public function __construct($service) {
         $this->service = $service;
     }
-    public function get_profile($email,$password)
+    public function get_profile($email = null, $password = null)
     {
-        $email = $_POST['email'];
-        $password  = $_POST['password'];
+        $email = $_POST['email'] ?? null;
+        $password = $_POST['password'] ?? null;
 
         $user = $this->service->login($email, $password);
 
         if ($user) {
-            $_SESSION['user_id'] = $user->id;
-            $_SESSION['role'] = $user->role;
+            $_SESSION['d'] = $user->getId();
+            $_SESSION['role'] = $user->getRole();
 
-            if ($user->role === 'Admin') {
+            if ($user->getRole() === 'Admin') {
                 header('Location: /admindash'); 
             }
             exit(); 
