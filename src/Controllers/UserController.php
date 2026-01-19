@@ -37,7 +37,7 @@ class UserController extends Controller {
 
     public function index() {
         $users = $this->service->getUsers();
-        $users = $users ?? []; // jamais null
+        $users = $users ?? [];
 
         $this->render('admindash', [
             'users' => $users

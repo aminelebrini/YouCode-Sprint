@@ -1,5 +1,5 @@
 <?php
-
+    namespace Models;
  class Sprint{
     private $id;
     private $titre;
