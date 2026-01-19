@@ -15,6 +15,11 @@
         {
             return $this->SprintRepository->addSprint($titre, $dateDebut, $dateFin);
         }
+        public function get_Sprints()
+        {
+            $sprints = $this->SprintRepository->getSprint();
+            return $sprints ?? [];
+        }
 
     }
 

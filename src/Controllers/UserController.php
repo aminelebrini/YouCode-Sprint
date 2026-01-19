@@ -39,7 +39,7 @@ class UserController extends Controller {
         $users = $users ?? [];
 
         $this->render('admindash', [
-            'users' => $users
+            'users' => $users,
         ]);
     }
 

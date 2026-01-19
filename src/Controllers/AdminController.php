@@ -5,11 +5,13 @@ use Core\Controller;
 
 class AdminController extends Controller{
     private $SprintService;
+    private $UserService;
 
-    public function __construct($services)
-    {
+    public function __construct($services) {
         parent::__construct();
-        $this->SprintService = $services['sprint'];    }
+        $this->SprintService = $services['sprint'];
+        $this->UserService = $services['user'];
+    }
 
     public function addSprint()
     {
@@ -30,10 +32,15 @@ class AdminController extends Controller{
         }
     }
 
-    // public function getSprints()
-    // {
-    //     $sprints = $this->service->get_Sprints()
-    // }
+    public function index()
+    {
+        $sprints = $this->SprintService->get_Sprints() ?? [];
+        $users = $this->UserService->getUsers() ?? [];
+        $this->render('admindash', [
+                'sprints' => $sprints,
+                'users' => $users
+            ]);
+    }
 
 }
 ?>

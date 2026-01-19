@@ -153,9 +153,10 @@
                                 <th class="p-8 text-right">Actions</th>
                             </tr>
                         </thead>
+                        @foreach($sprints as $sprint)
                         <tbody class="text-sm">
                             <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
-                                <td class="p-8 font-black text-white uppercase tracking-tight italic">Docker Architecture v1</td>
+                                <td class="p-8 font-black text-white uppercase tracking-tight italic">{{ $sprint->getTitre() }}</td>
                                 <td class="p-8">
                                     <div class="flex items-center gap-3 text-white/50">
                                         <i class="far fa-calendar-alt text-cyan-400/50"></i>
@@ -168,6 +169,7 @@
                                 </td>
                             </tr>
                         </tbody>
+                        @endforeach
                     </table>
                 </div>
             </section>
