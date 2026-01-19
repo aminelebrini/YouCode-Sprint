@@ -18,13 +18,12 @@
  backdrop-filter: blur(16px);
  border: 1px solid rgba(34, 211, 238, 0.2);
  }
- /* Custom scrollbar for Cyberpunk feel */
  ::-webkit-scrollbar { width: 5px; }
  ::-webkit-scrollbar-track { background: #050505; }
  ::-webkit-scrollbar-thumb { background: #22d3ee; border-radius: 10px; }
  </style>
 </head>
-<body class="bg-[url('https://42.fr/wp-content/uploads/2021/07/Background-RM-2000x1132.jpg')] bg-cover bg-center bg-no-repeat min-h-screen font-sans text-white overflow-hidden">
+<body class="bg-cyan-900 bg-cover bg-center bg-no-repeat min-h-screen font-sans text-white overflow-hidden">
 
  <div class="flex h-screen overflow-hidden">
  
@@ -219,22 +218,16 @@
  <form class="space-y-6 text-left">
  <div class="space-y-2">
  <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2">Titre du Sprint</label>
- <input type="text" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:border-cyan-400/50 transition-all">
- </div>
- <div class="space-y-2">
- <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2">Assigner à (Formateur)</label>
- <select class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:border-cyan-400/50 transition-all appearance-none">
- <option value="" class="bg-zinc-900">Choisir un formateur...</option>
- </select>
+ <input type="text" name="titre" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:border-cyan-400/50 transition-all">
  </div>
  <div class="grid grid-cols-2 gap-4">
  <div class="space-y-2">
  <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2">Début</label>
- <input type="date" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:border-cyan-400/50">
+ <input type="date" name="date_debut" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:border-cyan-400/50">
  </div>
  <div class="space-y-2">
  <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2">Fin</label>
- <input type="date" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:border-cyan-400/50">
+ <input type="date" name="date_fin" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:border-cyan-400/50">
  </div>
  </div>
  <button type="submit" class="w-full bg-cyan-400 text-black font-black py-4 rounded-2xl uppercase tracking-[0.2em] text-xs hover:bg-white transition-all">Lancer le Sprint</button>
