@@ -1,26 +1,25 @@
 <?php
-    namespace Services;
+namespace Services;
 
-    use Repository\UserRepository;
+use Repository\UserRepository;
 
-class UserService{
-    private  $UserRepository;
+class UserService {
+    private $userRepo;
 
-    public function __construct()
-    {
-        $this->UserRepository = new UserRepository();
+    public function __construct(UserRepository $repo) {
+        $this->userRepo = $repo;
     }
 
-    public function login($email, $password)
-    {
-        $user = $this->UserRepository->findByEmail($email);
-
-
+    public function login($email, $password) {
+        $user = $this->userRepo->findByEmail($email);
         if ($user && $user->getPassword() === $password) {
             return $user;
         }
         return null;
     }
-}
 
+    public function getUsers() {
+        return $this->userRepo->getAllUsers();
+    }
+}
 ?>

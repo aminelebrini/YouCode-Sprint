@@ -1,4 +1,6 @@
 <?php
+
+session_start();
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Core\Router;
@@ -16,9 +18,14 @@ $userService = new UserService($userRepo);
 
 $router = new Router($userService);
 
-$router->get('/', 'Controllers\\HomeController@index', 'visiteur');
-$router->get('/admindash', 'Controllers\\UserController@index', 'admin');
+$router->get('/', 'Controllers\\HomeController@index', 'Visiteur');
+$router->get('/admindash', 'Controllers\\UserController@index', 'Admin');
 
-$router->post('/get_profile', 'Controllers\\UserController@get_profile', 'visiteur');
+$router->post('/get_profile', 'Controllers\\UserController@get_profile', 'Visiteur');
+$router->post('/logout', 'Controllers\\UserController@logout', 'Admin');
+$router->post('/logout', 'Controllers\\UserController@logout', 'Student');
+$router->post('/logout', 'Controllers\\UserController@logout', 'Formateur');
+
+
 
 $router->generate_path();

@@ -1,40 +1,53 @@
 <?php
-
- namespace Controllers;
+namespace Controllers;
 
 use Core\Controller;
-use Models\User;
- class UserController extends Controller
- {
+
+class UserController extends Controller {
     private $service;
 
     public function __construct($service) {
+        parent::__construct();
         $this->service = $service;
     }
-    public function get_profile($email = null, $password = null)
-    {
-        $email = $_POST['email'] ?? null;
-        $password = $_POST['password'] ?? null;
 
-        $user = $this->service->login($email, $password);
+    public function get_profile() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $email = $_POST['email'] ?? null;
+            $password = $_POST['password'] ?? null;
 
-        if ($user) {
-            $_SESSION['d'] = $user->getId();
-            $_SESSION['role'] = $user->getRole();
+            $user = $this->service->login($email, $password);
 
-            if ($user->getRole() === 'Admin') {
-                header('Location: /admindash'); 
+            if ($user) {
+                $_SESSION['id'] = $user->getId();
+                $_SESSION['role'] = $user->getRole();
+
+                if ($user->getRole() === 'Admin') {
+                    header('Location: /admindash'); 
+                } else {
+                    header('Location: /home'); 
+                }
+                exit();
+            } else {
+                header('Location: /home'); 
+                exit();
             }
-            exit(); 
-        } else {
-            header('Location: /home');
         }
     }
-    public function index()
-    {
+
+    public function index() {
+        $users = $this->service->getUsers();
+        $users = $users ?? []; // jamais null
+
         $this->render('admindash', [
-            'title' => 'admindash'
+            'users' => $users
         ]);
     }
- }
+
+    public function logout() {
+        session_destroy();
+        header("Location: /");
+        exit();
+    }
+}
 ?>

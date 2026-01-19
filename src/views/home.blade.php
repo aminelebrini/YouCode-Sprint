@@ -62,20 +62,7 @@
                 placeholder="••••••••">
         </div>
 
-        <div class="flex items-center px-2">
-            <label class="flex items-center cursor-pointer group">
-                <div class="relative">
-                    <input type="checkbox" class="sr-only peer">
-                    <div class="w-4 h-4 border border-white/20 rounded peer-checked:bg-cyan-500 peer-checked:border-cyan-500 transition-all"></div>
-                    <svg class="absolute top-0 left-0 w-4 h-4 text-black hidden peer-checked:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4">
-                        <path d="M5 13l4 4L19 7" />
-                    </svg>
-                </div>
-                <span class="ml-3 text-[11px] text-white/40 group-hover:text-white/70 transition-colors">Rester connecté à la session</span>
-            </label>
-        </div>
-
-        <button type="submit" 
+        <button type="submit" name="login"
             class="relative overflow-hidden w-full bg-white text-black font-black py-4 rounded-2xl transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.98] uppercase tracking-[0.3em] text-sm group">
             
             <span class="relative z-10 group-hover:text-cyan-600 transition-colors">SE CONNECTER</span>
