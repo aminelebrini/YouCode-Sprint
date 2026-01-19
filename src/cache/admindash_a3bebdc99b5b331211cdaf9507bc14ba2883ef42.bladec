@@ -215,7 +215,7 @@
  <h3 class="text-white text-2xl font-black italic uppercase tracking-tighter">Créer <span class="text-cyan-400">Sprint</span></h3>
  <button onclick="toggleModal('SprintModal')" class="text-white/20 hover:text-white"><i class="fas fa-times"></i></button>
  </div>
- <form class="space-y-6 text-left">
+ <form class="space-y-6 text-left" action="/addSprint" method="POST">
  <div class="space-y-2">
  <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2">Titre du Sprint</label>
  <input type="text" name="titre" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:border-cyan-400/50 transition-all">

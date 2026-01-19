@@ -6,7 +6,9 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Core\Router;
 use Core\Data;
 use Repository\UserRepository;
+use Repository\SprintRepository;
 use Services\UserService;
+use Services\SprintService;
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
@@ -14,9 +16,16 @@ $dotenv->load();
 $db = Data::getInstance()->connection();
 
 $userRepo = new UserRepository($db);
-$userService = new UserService($userRepo);
+$sprintRepo = new SprintRepository($db);
 
-$router = new Router($userService);
+$userService = new UserService($userRepo);
+$sprintService = new SprintService($sprintRepo); 
+
+$router = new Router([
+    'user' => $userService,
+    'sprint' => $sprintService
+]);
+
 
 $router->get('/', 'Controllers\\HomeController@index', 'Visiteur');
 $router->get('/admindash', 'Controllers\\UserController@index', 'Admin');
@@ -25,7 +34,6 @@ $router->post('/get_profile', 'Controllers\\UserController@get_profile', 'Visite
 $router->post('/logout', 'Controllers\\UserController@logout', 'Admin');
 $router->post('/logout', 'Controllers\\UserController@logout', 'Student');
 $router->post('/logout', 'Controllers\\UserController@logout', 'Formateur');
-
-
+$router->post('/addSprint', 'Controllers\\AdminController@addSprint', 'Admin');
 
 $router->generate_path();

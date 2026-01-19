@@ -6,10 +6,9 @@ use Core\Controller;
 class UserController extends Controller {
     private $service;
 
-    public function __construct($service) {
+    public function __construct($services) {
         parent::__construct();
-        $this->service = $service;
-    }
+        $this->service = $services['user'];    }
 
     public function get_profile() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {

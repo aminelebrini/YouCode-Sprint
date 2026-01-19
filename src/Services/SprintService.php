@@ -1,4 +1,5 @@
 <?php
+    namespace Services;
 
     use Repository\SprintRepository;
 
@@ -12,7 +13,7 @@
         }
         public function createSprint($titre, $dateDebut, $dateFin)
         {
-            $Sprints = $this->SprintRepository->addSprint($titre, $dateDebut, $dateFin);
+            return $this->SprintRepository->addSprint($titre, $dateDebut, $dateFin);
         }
 
     }

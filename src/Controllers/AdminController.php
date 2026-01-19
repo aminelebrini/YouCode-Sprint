@@ -1,17 +1,15 @@
 <?php
 
+namespace Controllers;
 use Core\Controller;
 
 class AdminController extends Controller{
-    private $service;
     private $SprintService;
 
-    public function __construct($service, $SprintService)
+    public function __construct($services)
     {
         parent::__construct();
-        $this->service = $service;
-        $this->SprintService = $SprintService;
-    }
+        $this->SprintService = $services['sprint'];    }
 
     public function addSprint()
     {
@@ -31,6 +29,11 @@ class AdminController extends Controller{
             
         }
     }
+
+    // public function getSprints()
+    // {
+    //     $sprints = $this->service->get_Sprints()
+    // }
 
 }
 ?>

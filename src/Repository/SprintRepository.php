@@ -17,7 +17,7 @@
         {
             $query = "INSERT INTO sprints (nom, date_debut, date_fin) values(?,?,?)";
             $statement = $this->conn->prepare($query);
-            $statement->execute([$titre, $dateDebut, $dateFin]);
+            return $statement->execute([$titre, $dateDebut, $dateFin]);
         }
     }
 
