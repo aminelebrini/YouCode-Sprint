@@ -189,8 +189,58 @@
  </table>
  </div>
  </section>
-
  
+ <section id="classes" class="animate-fade-in mt-12" style="animation-delay: 0.4s;">
+ <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6 px-4">
+ <h2 class="text-cyan-400 font-black uppercase tracking-[0.3em] text-xl italic">
+ <i class="fas fa-chalkboard mr-3"></i>Gestion des Classes
+ </h2>
+ <button onclick="toggleModal('ClassModal')" class="bg-cyan-400 text-black font-black px-6 py-3 rounded-xl hover:scale-105 transition-all uppercase tracking-widest text-[10px] flex items-center gap-2">
+ <i class="fas fa-plus"></i> Nouvelle Classe
+ </button>
+ </div>
+
+ <div class="glass-card rounded-[2.5rem] overflow-hidden">
+ <table class="w-full text-left">
+ <thead>
+ <tr class="text-cyan-400/60 text-[10px] uppercase tracking-[0.2em] border-b border-white/5">
+ <th class="p-8">Nom de la Classe</th>
+ <th class="p-8">Formateur</th>
+ <th class="p-8">Effectif</th>
+ <th class="p-8 text-right">Actions</th>
+ </tr>
+ </thead>
+ <tbody class="text-sm">
+ <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors group">
+ <td class="p-8">
+ <p class="font-black text-white uppercase tracking-tight italic">Promo FEBE-2026</p>
+ <p class="text-[9px] text-white/30 uppercase tracking-widest">ID: #CLS-01</p>
+ </td>
+ <td class="p-8">
+ <div class="flex items-center gap-3">
+ <div class="w-6 h-6 rounded-full bg-cyan-400/20 flex items-center justify-center text-[10px] font-bold text-cyan-400">JD</div>
+ <span class="text-white/70 font-medium">Jean Dupont</span>
+ </div>
+ </td>
+ <td class="p-8">
+ <div class="flex items-center gap-2 text-white/50">
+ <i class="fas fa-users text-cyan-400/50 text-xs"></i>
+ <span>24 Apprenants</span>
+ </div>
+ </td>
+ <td class="p-8 text-right space-x-2">
+ <button title="Modifier" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-cyan-400/20 hover:text-cyan-400 transition-all text-white/40">
+ <i class="fas fa-edit"></i>
+ </button>
+ <button title="Supprimer" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-red-500/20 hover:text-red-500 transition-all text-white/40">
+ <i class="fas fa-trash-alt"></i>
+ </button>
+ </td>
+ </tr>
+ </tbody>
+ </table>
+ </div>
+ </section>
  </main>
  </div>
 
@@ -200,23 +250,32 @@
  <h3 class="text-white text-2xl font-black italic uppercase tracking-tighter">Nouveau <span class="text-cyan-400">Membre</span></h3>
  <button onclick="toggleModal('userModal')" class="text-white/20 hover:text-white"><i class="fas fa-times"></i></button>
  </div>
- <form class="space-y-6">
+ <form class="space-y-6" action="/addUsers" method="POST">
  <div class="grid grid-cols-2 gap-4 text-left">
  <div class="space-y-2">
- <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2">Nom Complet</label>
- <input type="text" placeholder="Ex: Jean" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:border-cyan-400/50 transition-all">
+ <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2">Nom</label>
+ <input type="text" name="nom" placeholder="Ex: Jean" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:border-cyan-400/50 transition-all">
+ </div>
+ <div class="space-y-2">
+ <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2">Prenom</label>
+ <input type="text" name="prenom" placeholder="Ex: Jean" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:border-cyan-400/50 transition-all">
+ </div>
  </div>
  <div class="space-y-2">
  <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2">Rôle</label>
- <select class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:border-cyan-400/50 transition-all appearance-none">
+ <select name="role" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:border-cyan-400/50 transition-all appearance-none">
  <option value="apprenant" class="bg-zinc-900">Apprenant</option>
  <option value="formateur" class="bg-zinc-900">Formateur</option>
  </select>
  </div>
- </div>
  <div class="space-y-2 text-left">
  <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2">Email YouCode</label>
- <input type="email" placeholder="nom@youcode.ma" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:border-cyan-400/50 transition-all">
+ <input name="email" type="email" placeholder="nom@youcode.ma" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:border-cyan-400/50 transition-all">
+ </div>
+
+ <div class="space-y-2 text-left">
+ <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2">Email YouCode</label>
+ <input name="password" type="password" placeholder="••••••••" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:border-cyan-400/50 transition-all">
  </div>
  <button type="submit" class="w-full bg-white text-black font-black py-4 rounded-2xl uppercase tracking-[0.2em] text-xs hover:bg-cyan-400 transition-all">Enregistrer</button>
  </form>
@@ -296,7 +355,18 @@
  </div>
  </div>
 
- <button type="submit" 
+
+ <div class="space-y-2 text-left">
+ <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2 italic">Effectif Max</label>
+ <div class="relative group">
+ <i class="fas fa-users absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-cyan-400 transition-colors"></i>
+ <input type="text" name="annee_scolaire"
+ class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-5 text-white outline-none focus:border-cyan-400/50 transition-all"
+ placeholder="Ex: 25">
+ </div>
+ </div>
+
+ <button type="submit"
  class="relative overflow-hidden w-full bg-white text-black font-black py-4 rounded-2xl transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.98] uppercase tracking-[0.3em] text-xs group">
  <span class="relative z-10">Confirmer la Création</span>
  <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite]"></div>
