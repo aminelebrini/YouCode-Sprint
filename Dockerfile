@@ -12,11 +12,14 @@ RUN apt-get update && apt-get install -y \
 RUN a2enmod rewrite
 
 #docker build --network=host --no-cache -t youcode-sprint .
-#docker exec youcode-sprint php -m | grep pgsql
+
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
+COPY src/ /var/www/html/
+# Définir ServerName pour Apache
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
+# Créer cache et permissions
 RUN mkdir -p /var/www/html/src/cache \
     && chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html

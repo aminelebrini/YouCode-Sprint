@@ -21,6 +21,13 @@
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: #050505; }
         ::-webkit-scrollbar-thumb { background: #22d3ee; border-radius: 10px; }
+
+        @keyframes shimmer {
+        100% { transform: translateX(100%); }
+    }
+    .group-hover\:animate-\[shimmer_2s_infinite\]:hover {
+        animation: shimmer 2s infinite;
+    }
     </style>
 </head>
 <body class="bg-cyan-900 bg-cover bg-center bg-no-repeat min-h-screen font-sans text-white overflow-hidden">
@@ -31,7 +38,7 @@
             <header class="text-center mb-12">
                 <h1 class="text-white text-2xl font-black italic uppercase tracking-tighter">
                     YouCode <br>
-                    <span class="text-cyan-400 inline-block">Sprint</span>
+                    <span class="text-cyan-400 inline-block ml-[15%]">Sprint</span>
                 </h1>
                 <div class="h-[2px] w-[40%] bg-cyan-500 mx-auto mt-2 rounded-full"></div>
             </header>
@@ -49,13 +56,19 @@
                     <i class="fas fa-layer-group"></i>
                     <span>Sprints</span>
                 </a>
+                <a href="#sprints" class="flex items-center space-x-4 text-white/60 hover:text-cyan-400 px-6 py-4 rounded-2xl font-black uppercase tracking-widest text-xs transition-all hover:bg-white/5">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Classes</span>
+                </a>
             </nav>
 
             <div class="mt-auto pt-6 border-t border-white/5">
-                <button class="w-full flex items-center space-x-4 text-red-400/60 hover:text-red-400 px-6 py-4 rounded-2xl font-black uppercase tracking-widest text-xs transition-all">
-                    <i class="fas fa-power-off"></i>
-                    <span>Déconnexion</span>
-                </button>
+                <form action="/logout" method="POST">
+                    <button class="w-full flex items-center space-x-4 text-red-400/60 hover:text-red-400 px-6 py-4 rounded-2xl font-black uppercase tracking-widest text-xs transition-all">
+                        <i class="fas fa-power-off"></i>
+                        <span>Déconnexion</span>
+                    </button>
+                </form>
             </div>
         </aside>
 
@@ -80,17 +93,17 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 animate-fade-in">
                 <div class="glass-card p-8 rounded-[2rem] group hover:border-cyan-400/50 transition-all duration-500">
-                    <p class="text-cyan-400/60 text-[10px] uppercase font-black tracking-[0.2em] mb-2">Total Apprenants</p>
-                    <h3 class="text-4xl font-black tracking-tighter italic">1,240</h3>
+                    <p class="text-cyan-400/60 text-[10px] uppercase font-black tracking-[0.2em] mb-2">Total Utilisateurs</p>
+                    <h3 class="text-4xl font-black tracking-tighter italic">1</h3>
                     <div class="mt-4 h-1 w-12 bg-cyan-500 rounded-full group-hover:w-full transition-all duration-700"></div>
                 </div>
                 <div class="glass-card p-8 rounded-[2rem] group hover:border-cyan-400/50 transition-all duration-500">
-                    <p class="text-cyan-400/60 text-[10px] uppercase font-black tracking-[0.2em] mb-2">Sprints Actifs</p>
+                    <p class="text-cyan-400/60 text-[10px] uppercase font-black tracking-[0.2em] mb-2">Total Sprints</p>
                     <h3 class="text-4xl font-black tracking-tighter italic">08</h3>
                     <div class="mt-4 h-1 w-12 bg-green-500 rounded-full group-hover:w-full transition-all duration-700"></div>
                 </div>
                 <div class="glass-card p-8 rounded-[2rem] group hover:border-cyan-400/50 transition-all duration-500">
-                    <p class="text-cyan-400/60 text-[10px] uppercase font-black tracking-[0.2em] mb-2">Tâches en attente</p>
+                    <p class="text-cyan-400/60 text-[10px] uppercase font-black tracking-[0.2em] mb-2">Total Formateurs</p>
                     <h3 class="text-4xl font-black tracking-tighter italic">42</h3>
                     <div class="mt-4 h-1 w-12 bg-yellow-500 rounded-full group-hover:w-full transition-all duration-700"></div>
                 </div>
@@ -114,24 +127,24 @@
                             </tr>
                         </thead>
                         <tbody class="text-sm">
-                            <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
-                                <td class="p-8">
-                                    @foreach($users as $user)
-                                        @if($user)
-                                            <p class="font-black text-white uppercase tracking-tight">{{ $user->getFirstname() }} {{ $user->getLastname() }}</p>
-                                            <p class="text-[9px] text-white/30 uppercase tracking-widest">ID: #4401</p>
-                                        @endif
-                                    @endforeach
-                                </td>
-                                <td class="p-8">
-                                    <span class="px-3 py-1 bg-cyan-400/10 text-cyan-400 rounded-full text-[9px] font-black uppercase tracking-widest border border-cyan-400/20">Apprenant</span>
-                                </td>
-                                <td class="p-8 text-white/50 font-medium">a.lebrini@youcode.ma</td>
-                                <td class="p-8 text-right space-x-2">
-                                    <button class="w-8 h-8 rounded-lg bg-white/5 hover:bg-cyan-400/20 hover:text-cyan-400 transition-all text-white/40"><i class="fas fa-edit"></i></button>
-                                    <button class="w-8 h-8 rounded-lg bg-white/5 hover:bg-red-500/20 hover:text-red-500 transition-all text-white/40"><i class="fas fa-trash-alt"></i></button>
-                                </td>
-                            </tr>
+                            @foreach($users as $user)
+                                @if($user)
+                                <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                                    <td class="p-8">
+                                        <p class="font-black text-white uppercase tracking-tight">{{ $user->getFirstname() }} {{ $user->getLastname() }}</p>
+                                        <p class="text-[9px] text-white/30 uppercase tracking-widest">ID: #4401</p>
+                                    </td>
+                                    <td class="p-8">
+                                        <span class="px-3 py-1 bg-cyan-400/10 text-cyan-400 rounded-full text-[9px] font-black uppercase tracking-widest border border-cyan-400/20">{{ $user->getRole() }}</span>
+                                    </td>
+                                    <td class="p-8 text-white/50 font-medium">{{ $user->getEmail() }}</td>
+                                    <td class="p-8 text-right space-x-2">
+                                        <button class="w-8 h-8 rounded-lg bg-white/5 hover:bg-cyan-400/20 hover:text-cyan-400 transition-all text-white/40"><i class="fas fa-edit"></i></button>
+                                        <button class="w-8 h-8 rounded-lg bg-white/5 hover:bg-red-500/20 hover:text-red-500 transition-all text-white/40"><i class="fas fa-trash-alt"></i></button>
+                                    </td>
+                                </tr>
+                                @endif
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -174,9 +187,7 @@
                 </div>
             </section>
 
-            <footer class="mt-12 mb-8 text-center">
-                <p class="text-[10px] text-white/20 uppercase tracking-[0.5em]">YouCode Administration <span class="text-cyan-500/40 italic">Core v2.4.0</span></p>
-            </footer>
+            
         </main>
     </div>
 
@@ -235,6 +246,62 @@
         </div>
     </div>
 
+    <div id="ClassModal" class="hidden fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="glass-card w-full max-w-lg p-10 rounded-[2.5rem] border-cyan-400/30 animate-fade-in">
+        
+            <div class="flex justify-between items-center mb-8">
+                <h3 class="text-white text-2xl font-black italic uppercase tracking-tighter">
+                Nouvelle <span class="text-cyan-400">Classe</span>
+                </h3>
+                <button onclick="toggleModal('ClassModal')" class="text-white/20 hover:text-white transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        
+         <form action="/add_class" method="POST" class="space-y-6">
+            
+                <div class="space-y-2 text-left">
+                <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2 italic">Nom de la promotion</label>
+                 <div class="relative group">
+                    <i class="fas fa-graduation-cap absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-cyan-400 transition-colors"></i>
+                     <input type="text" name="class_name" required
+                         class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-5 text-white outline-none focus:border-cyan-400/50 focus:bg-white/[0.08] transition-all"
+                            placeholder="Ex: FEBE-2026">
+                    </div>
+                </div>
+
+                <div class="space-y-2 text-left">
+                    <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2 italic">Formateur Référent</label>
+                    <div class="relative group">
+                        <i class="fas fa-user-tie absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-cyan-400 transition-colors"></i>
+                        <select name="teacher_id" required
+                            class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-5 text-white outline-none focus:border-cyan-400/50 appearance-none transition-all">
+                            <option value="" class="bg-zinc-900">Choisir un formateur...</option>
+                            <option value="1" class="bg-zinc-900">Jean Dupont</option>
+                     </select>
+                        <i class="fas fa-chevron-down absolute right-5 top-1/2 -translate-y-1/2 text-[10px] text-white/20 pointer-events-none"></i>
+                    </div>
+                </div>
+
+                <div class="space-y-2 text-left">
+                 <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2 italic">Effectif Max</label>
+                    <div class="relative group">
+                     <i class="fas fa-users absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-cyan-400 transition-colors"></i>
+                        <input type="number" name="capacity"
+                         class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-5 text-white outline-none focus:border-cyan-400/50 transition-all"
+                         placeholder="Ex: 25">
+                    </div>
+                </div>
+
+                <button type="submit" 
+                    class="relative overflow-hidden w-full bg-white text-black font-black py-4 rounded-2xl transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.98] uppercase tracking-[0.3em] text-xs group">
+                    <span class="relative z-10">Confirmer la Création</span>
+                    <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite]"></div>
+                </button>
+            
+            </form>
+        </div>
+    </div>
     <script>
         function toggleModal(id) {
             const modal = document.getElementById(id);

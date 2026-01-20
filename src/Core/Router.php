@@ -41,7 +41,7 @@ class Router{
         $controllerObj = new $fullClass($this->userService);
             $controllerObj->$methodPart();
         } else {
-            die("Controller $fullClass malqynahch.");
+            die("Controller $fullClass malqynahch hhhhh.");
         } 
     }
 }

@@ -23,7 +23,7 @@ class Data
 
             if(self::$connection)
             {
-                return "hhhh";
+                return "hana khdmt hhhh";
             }
         }catch(PDOException $e)
         {
