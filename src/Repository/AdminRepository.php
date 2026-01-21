@@ -4,6 +4,7 @@ namespace Repository;
 use Core\Data;
 use Models\Classe;
 use Models\Sprint;
+use Models\Competence;
 use PDO;
 
 class AdminRepository
@@ -46,13 +47,17 @@ class AdminRepository
     }
 
     public function Assigne($ClasseId, $FormateurId)
-{
-    $query = "INSERT INTO formateur_classe (formateur_id, classe_id) VALUES (?, ?)";
-    $stmt = $this->conn->prepare($query);
-    $stmt->execute([$FormateurId, $ClasseId]);
-}
-
-
+    {
+        $query = "INSERT INTO formateur_classe (formateur_id, classe_id) VALUES (?, ?)";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$FormateurId, $ClasseId]);
+    }
+    public function add_Skill($ComperenceName)
+    {
+        $query = "INSERT INTO competences (nom) VALUES (?)";
+        $statment = $this->conn->prepare($query);
+        $statment->execute([$ComperenceName]);
+    }
     public function getSprint()
     {
         $query = "SELECT * FROM sprints";
@@ -97,6 +102,25 @@ class AdminRepository
             );
         }
         return $AllClasses;
+    }
+    public function getCompetence()
+    {
+        $query = "SELECT * FROM competences";
+        $statment = $this->conn->prepare($query);
+        $statment->execute();
+
+        $competences = $statment->fetchAll(PDO::FETCH_ASSOC);
+
+        $AllCompetences = [];
+        foreach($competences as $competence)
+        {
+            $AllCompetences [] = new Competence(
+                $competence['id'],
+                $competence['nom']
+            );
+        }
+
+        return $AllCompetences;
     }
 }
 ?>

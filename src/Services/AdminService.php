@@ -27,6 +27,10 @@ use Repository\AdminRepository;
         {
             return $this->AdminRepository->Assigne($ClasseId,$FormateurId);
         }
+        public function addSkill($ComperenceName)
+        {
+            return $this->AdminRepository->add_Skill($ComperenceName);
+        }
         public function get_Sprints()
         {
             $sprints = $this->AdminRepository->getSprint();
@@ -36,6 +40,11 @@ use Repository\AdminRepository;
         {
             $classes = $this->AdminRepository->getClasses();
             return $classes ?? [];
+        }
+        public function get_Competence()
+        {
+            $comperences = $this->AdminRepository->getCompetence();
+            return $comperences ?? [];
         }
     }
 

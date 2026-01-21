@@ -41,6 +41,7 @@ $router->post('/CreateUser', 'Controllers\\AdminController@CreateUser', 'Admin')
 $router->post('/addSprint', 'Controllers\\AdminController@addSprint', 'Admin');
 $router->post('/add_class', 'Controllers\\AdminController@add_class','Admin');
 $router->post('/assignation','Controllers\\AdminController@assignation', 'Admin');
+$router->post('/add_skill','Controllers\\AdminController@add_skill', 'Admin');
 
 
 

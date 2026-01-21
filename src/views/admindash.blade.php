@@ -60,6 +60,10 @@
                     <i class="fas fa-layer-group"></i>
                     <span>Classes</span>
                 </a>
+                <a href="#sprints" class="flex items-center space-x-4 text-white/60 hover:text-cyan-400 px-6 py-4 rounded-2xl font-black uppercase tracking-widest text-xs transition-all hover:bg-white/5">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Competences</span>
+                </a>
             </nav>
 
             <div class="mt-auto pt-6 border-t border-white/5">
@@ -263,28 +267,24 @@
             <thead>
                 <tr class="text-cyan-400/60 text-[10px] uppercase tracking-[0.2em] border-b border-white/5 bg-white/[0.02]">
                     <th class="p-8">Nom de la Compétence</th>
-                    <th class="p-8">Catégorie</th>
-                    <th class="p-8">Date Création</th>
                     <th class="p-8 text-right">Actions</th>
                 </tr>
             </thead>
             <tbody class="text-sm">
+                @foreach($competences as $competence)
                 <tr class="border-b border-white/5 hover:bg-cyan-400/[0.03] transition-colors group">
                     <td class="p-8">
                         <div class="flex items-center gap-4">
                             <div class="w-2 h-8 bg-cyan-400 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.5)]"></div>
-                            <p class="font-black text-white uppercase tracking-tight italic">Conception UML</p>
+                            <p class="font-black text-white uppercase tracking-tight italic">{{ $competence->getNom() }}</p>
                         </div>
                     </td>
-                    <td class="p-8">
-                        <span class="px-3 py-1 bg-white/5 text-white/60 rounded-lg text-[9px] font-black uppercase tracking-widest border border-white/10 group-hover:border-cyan-400/30">Backend</span>
-                    </td>
-                    <td class="p-8 text-white/40 italic text-xs">21 Jan 2026</td>
                     <td class="p-8 text-right space-x-2">
                         <button class="w-8 h-8 rounded-lg bg-white/5 hover:bg-cyan-400/20 hover:text-cyan-400 transition-all text-white/40"><i class="fas fa-edit"></i></button>
                         <button class="w-8 h-8 rounded-lg bg-white/5 hover:bg-red-500/20 hover:text-red-500 transition-all text-white/40"><i class="fas fa-trash-alt"></i></button>
                     </td>
                 </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -502,26 +502,11 @@
                 <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-4 italic group-focus-within:text-cyan-400 transition-colors">Désignation</label>
                 <div class="relative">
                     <i class="fas fa-brain absolute left-5 top-1/2 -translate-y-1/2 text-white/10 group-focus-within:text-cyan-400 transition-colors"></i>
-                    <input type="text" name="skill_name" required
+                    <input type="text" name="competence_name" required
                         class="w-full bg-white/[0.03] border border-white/10 rounded-2xl py-5 pl-14 pr-5 text-white placeholder-white/10 focus:border-cyan-400/50 focus:bg-white/[0.08] outline-none transition-all"
                         placeholder="Ex: Programmation Asynchrone">
                 </div>
             </div>
-
-            <div class="space-y-2 group text-left">
-                <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-4 italic group-focus-within:text-cyan-400 transition-colors">Catégorie Technique</label>
-                <div class="relative">
-                    <i class="fas fa-tags absolute left-5 top-1/2 -translate-y-1/2 text-white/10 group-focus-within:text-cyan-400 transition-colors"></i>
-                    <select name="category" class="w-full bg-white/[0.03] border border-white/10 rounded-2xl py-5 pl-14 pr-5 text-white outline-none focus:border-cyan-400/50 appearance-none transition-all">
-                        <option value="frontend" class="bg-zinc-900">Frontend</option>
-                        <option value="backend" class="bg-zinc-900">Backend</option>
-                        <option value="mobile" class="bg-zinc-900">Mobile</option>
-                        <option value="devops" class="bg-zinc-900">DevOps / Cloud</option>
-                        <option value="soft" class="bg-zinc-900">Soft Skills</option>
-                    </select>
-                </div>
-            </div>
-
             <button type="submit" 
                 class="w-full bg-white text-black font-black py-5 rounded-2xl uppercase tracking-[0.4em] text-[10px] hover:bg-cyan-400 transition-all duration-500 shadow-[0_0_30px_rgba(255,255,255,0.05)]">
                 Ajouter au Référentiel

@@ -88,15 +88,36 @@ class AdminController extends Controller{
         }
     }
 
+    public function add_skill()
+    {
+        $ComperenceName = $_POST['competence_name'];
+        
+        if($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            if(!$this->AdminService->addSkill($ComperenceName))
+            {
+                die("Erreur lors de l'ajout du Competence");
+                
+            }
+            header('Location: /admindash');
+            exit();
+        }
+    
+    }
+
+
     public function index()
     {
         $sprints = $this->AdminService->get_Sprints() ?? [];
         $users = $this->UserService->getUsers() ?? [];
         $classes = $this->AdminService->get_Classes() ?? [];
+        $competences = $this->AdminService->get_Competence() ?? [];
+
         $this->render('admindash', [
                 'sprints' => $sprints,
                 'users' => $users,
-                'classes' => $classes
+                'classes' => $classes,
+                'competences' => $competences
             ]);
     }
 
