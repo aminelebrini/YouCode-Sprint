@@ -78,7 +78,7 @@
                 <h2 class="text-cyan-400 font-black uppercase tracking-[0.3em] text-sm italic">Système d'administration</h2>
                 <div class="flex items-center space-x-4">
                     @foreach($users as $user)
-                        @if($user)
+                        @if($user->getId() === $_SESSION['id'])
                             <div class="text-right">
                                 <p class="text-[10px] text-white/40 uppercase font-bold tracking-widest leading-none">{{ $user->getFirstname() }} {{ $user->getLastname() }}</p>
                                 <p class="text-xs font-black text-white uppercase">Admin Sprint</p>
@@ -192,9 +192,14 @@
                     <h2 class="text-cyan-400 font-black uppercase tracking-[0.3em] text-xl italic">
                         <i class="fas fa-chalkboard mr-3"></i>Gestion des Classes
                     </h2>
-                    <button onclick="toggleModal('ClassModal')" class="bg-cyan-400 text-black font-black px-6 py-3 rounded-xl hover:scale-105 transition-all uppercase tracking-widest text-[10px] flex items-center gap-2">
-                        <i class="fas fa-plus"></i> Nouvelle Classe
-                    </button>
+                    <div class="flex flex-row justify-evenly gap-4">
+                        <button onclick="toggleModal('ClassModal')" class="bg-cyan-400 text-black font-black px-6 py-3 rounded-xl hover:scale-105 transition-all uppercase tracking-widest text-[10px] flex items-center gap-2">
+                            <i class="fas fa-plus"></i> Nouvelle Classe
+                        </button>
+                        <button onclick="toggleModal('AssignModal')" class="bg-cyan-400 text-black font-black px-6 py-3 rounded-xl hover:scale-105 transition-all uppercase tracking-widest text-[10px] flex items-center gap-2">
+                            <i class="fas fa-plus"></i> Assigner Les Formateurs
+                        </button>
+                    </div>
                 </div>
 
                 <div class="glass-card rounded-[2.5rem] overflow-hidden">
@@ -208,21 +213,21 @@
                             </tr>
                         </thead>
                         <tbody class="text-sm">
+                            @foreach($classes as $classe)
                             <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors group">
                                 <td class="p-8">
-                                    <p class="font-black text-white uppercase tracking-tight italic">Promo FEBE-2026</p>
+                                    <p class="font-black text-white uppercase tracking-tight italic">{{ $classe->getNom() }}</p>
                                     <p class="text-[9px] text-white/30 uppercase tracking-widest">ID: #CLS-01</p>
                                 </td>
                                 <td class="p-8">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-6 h-6 rounded-full bg-cyan-400/20 flex items-center justify-center text-[10px] font-bold text-cyan-400">JD</div>
-                                        <span class="text-white/70 font-medium">Jean Dupont</span>
+                                        <span class="text-white/70 font-medium">{{ $classe->getFormateur() }}</span>
                                     </div>
                                 </td>
                                 <td class="p-8">
                                     <div class="flex items-center gap-2 text-white/50">
                                         <i class="fas fa-users text-cyan-400/50 text-xs"></i>
-                                        <span>24 Apprenants</span>
+                                        <span>{{ $classe->getNombre() }}</span>
                                     </div>
                                 </td>
                                 <td class="p-8 text-right space-x-2">
@@ -234,6 +239,7 @@
                                     </button>
                                 </td>
                             </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -247,7 +253,7 @@
                 <h3 class="text-white text-2xl font-black italic uppercase tracking-tighter">Nouveau <span class="text-cyan-400">Membre</span></h3>
                 <button onclick="toggleModal('userModal')" class="text-white/20 hover:text-white"><i class="fas fa-times"></i></button>
             </div>
-            <form class="space-y-6" action="/addUsers" method="POST">
+            <form class="space-y-6" action="/CreateUser" method="POST">
                 <div class="grid grid-cols-2 gap-4 text-left">
                     <div class="space-y-2">
                         <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2">Nom</label>
@@ -261,8 +267,8 @@
                 <div class="space-y-2">
                         <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2">Rôle</label>
                         <select name="role" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:border-cyan-400/50 transition-all appearance-none">
-                            <option value="apprenant" class="bg-zinc-900">Apprenant</option>
-                            <option value="formateur" class="bg-zinc-900">Formateur</option>
+                            <option value="Student" class="bg-zinc-900">Student</option>
+                            <option value="Formateur" class="bg-zinc-900">Formateur</option>
                         </select>
                     </div>
                 <div class="space-y-2 text-left">
@@ -321,24 +327,11 @@
             
                 <div class="space-y-2 text-left">
                 <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2 italic">Nom de la promotion</label>
-                 <div class="relative group">
-                    <i class="fas fa-graduation-cap absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-cyan-400 transition-colors"></i>
-                     <input type="text" name="class_name" required
-                         class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-5 text-white outline-none focus:border-cyan-400/50 focus:bg-white/[0.08] transition-all"
-                            placeholder="Ex: FEBE-2026">
-                    </div>
-                </div>
-
-                <div class="space-y-2 text-left">
-                    <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2 italic">Formateur Référent</label>
                     <div class="relative group">
-                        <i class="fas fa-user-tie absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-cyan-400 transition-colors"></i>
-                        <select name="teacher_id" required
-                            class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-5 text-white outline-none focus:border-cyan-400/50 appearance-none transition-all">
-                            <option value="" class="bg-zinc-900">Choisir un formateur...</option>
-                            <option value="1" class="bg-zinc-900">Jean Dupont</option>
-                     </select>
-                        <i class="fas fa-chevron-down absolute right-5 top-1/2 -translate-y-1/2 text-[10px] text-white/20 pointer-events-none"></i>
+                        <i class="fas fa-graduation-cap absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-cyan-400 transition-colors"></i>
+                        <input type="text" name="class_name" required
+                            class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-5 text-white outline-none focus:border-cyan-400/50 focus:bg-white/[0.08] transition-all"
+                            placeholder="Ex: FEBE-2026">
                     </div>
                 </div>
 
@@ -354,12 +347,12 @@
 
 
                 <div class="space-y-2 text-left">
-                 <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2 italic">Effectif Max</label>
+                 <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2 italic">Promotion</label>
                     <div class="relative group">
                      <i class="fas fa-users absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-cyan-400 transition-colors"></i>
                         <input type="text" name="annee_scolaire"
                          class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-5 text-white outline-none focus:border-cyan-400/50 transition-all"
-                         placeholder="Ex: 25">
+                         placeholder="EX: 2025/2026">
                     </div>
                 </div>
 
@@ -372,6 +365,72 @@
             </form>
         </div>
     </div>
+
+    <div id="AssignModal" class="hidden fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
+    <div class="glass-card w-full max-w-lg p-10 rounded-[2.5rem] border-cyan-400/30 animate-fade-in shadow-[0_0_50px_rgba(34,211,238,0.15)]">
+        
+        <div class="flex justify-between items-center mb-8">
+            <div class="text-left">
+                <h3 class="text-white text-2xl font-black italic uppercase tracking-tighter leading-none">
+                    Assigner <span class="text-cyan-400">Formateur</span>
+                </h3>
+                <p class="text-[9px] text-white/30 uppercase tracking-[0.3em] mt-2">Liaison Classe & Enseignant</p>
+            </div>
+            <button onclick="toggleModal('AssignModal')" class="text-white/20 hover:text-white transition-all hover:rotate-90">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        
+            
+            <div class="space-y-2 text-left group">
+                <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2 italic group-focus-within:text-cyan-400 transition-colors">
+                    Sélectionner la Classe
+                </label>
+                <div class="relative">
+                    <i class="fas fa-chalkboard absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-cyan-400 transition-colors"></i>
+                    <select name="class_id" required
+                        class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-5 text-white outline-none focus:border-cyan-400/50 appearance-none transition-all cursor-pointer">
+                        @foreach($classes as $classe)
+                            <option value="" class="bg-zinc-900">Choisir une classe...</option>
+                            <option value="{{ $classe->getId() }}" class="bg-zinc-900">{{ $classe->getNom() }}</option>
+                        @endforeach
+                    </select>
+                    <i class="fas fa-chevron-down absolute right-5 top-1/2 -translate-y-1/2 text-[10px] text-white/20 pointer-events-none"></i>
+                </div>
+            </div>
+
+            <div class="space-y-2 text-left group">
+                <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2 italic group-focus-within:text-cyan-400 transition-colors">
+                    Formateur à Assigner
+                </label>
+                <div class="relative">
+                    <i class="fas fa-user-tie absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-cyan-400 transition-colors"></i>
+                    <select name="teacher_id" required
+                        class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-5 text-white outline-none focus:border-cyan-400/50 appearance-none transition-all cursor-pointer">
+                        @foreach($users as $user)
+                            @if($user->getRole() === 'Formateur')
+                                <option value="" class="bg-zinc-900">Choisir un formateur...</option>
+                                <option value="{{ $user->getId() }}" class="bg-zinc-900 uppercase">{{ $user->getFirstname() }} {{ $user->getLastname() }}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                    <i class="fas fa-chevron-down absolute right-5 top-1/2 -translate-y-1/2 text-[10px] text-white/20 pointer-events-none"></i>
+                </div>
+            </div>
+
+            <div class="pt-4">
+                <button type="submit" name="assigneformateur"
+                    class="relative overflow-hidden w-full bg-white text-black font-black py-4 rounded-2xl transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.98] uppercase tracking-[0.3em] text-xs group shadow-[0_10px_20px_rgba(0,0,0,0.3)]">
+                    <span class="relative z-10 flex items-center justify-center gap-3 group-hover:text-cyan-600 transition-colors">
+                        <i class="fas fa-link"></i> Finaliser l'assignation
+                    </span>
+                    <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
+                </button>
+            </div>
+            
+        </form>
+    </div>
+</div>
     <script>
         function toggleModal(id) {
             const modal = document.getElementById(id);

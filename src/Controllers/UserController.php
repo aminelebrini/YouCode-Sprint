@@ -23,12 +23,14 @@ class UserController extends Controller {
 
                 if ($user->getRole() === 'Admin') {
                     header('Location: /admindash'); 
+                    exit();
+
                 } else {
-                    header('Location: /home'); 
+                    header('Location: /home');
+                    exit(); 
                 }
-                exit();
             } else {
-                header('Location: /home'); 
+                header('Location: /home');
                 exit();
             }
         }

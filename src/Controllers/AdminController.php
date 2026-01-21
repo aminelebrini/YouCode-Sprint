@@ -4,19 +4,17 @@ namespace Controllers;
 use Core\Controller;
 
 class AdminController extends Controller{
-    private $SprintService;
     private $UserService;
-    private $ClasseService;
+    private $AdminService;
     
 
     public function __construct($services) {
         parent::__construct();
-        $this->SprintService = $services['sprint'];
         $this->UserService = $services['user'];
-        $this->ClasseService = $services['classe'];
+        $this->AdminService = $services['admin'];
     }
 
-    public function addUsers()
+    public function CreateUser()
     {
         if($_SERVER['REQUEST_METHOD'] === 'POST')
         {
@@ -26,7 +24,13 @@ class AdminController extends Controller{
             $email = $_POST['email'];
             $password = $_POST['password'];
 
-            if($this)
+            if($this->AdminService->CreateUser($nom, $prenom, $role,$email,$password))
+            {
+                header('Location: /admindash');
+                exit();
+            } else {
+                die("Erreur lors de l'ajout du Compte");
+            }
         }
 
     }
@@ -38,7 +42,7 @@ class AdminController extends Controller{
             $dateDebut = $_POST['date_debut'] ?? null;
             $dateFin = $_POST['date_fin'] ?? null;
 
-            if($this->SprintService->createSprint($titre, $dateDebut, $dateFin))
+            if($this->AdminService->createSprint($titre, $dateDebut, $dateFin))
             {
                 header('Location: /admindash');
                 exit();
@@ -54,11 +58,27 @@ class AdminController extends Controller{
         if($_SERVER['REQUEST_METHOD'] === 'POST')
         {
             $nom = $_POST['class_name'];
-            $teacher = $_POST['teacher_id'];
             $capacity = $_POST['capacity'];
             $annescolaire = $_POST['annee_scolaire'];
 
-            if($this->ClasseService->CreateClasse($nom, $teacher,$capacity,$annescolaire))
+            if($this->AdminService->CreateClasse($nom,$capacity,$annescolaire))
+            {
+                header('Location: /admindash');
+                exit();
+            } else {
+                die("Erreur lors de l'ajout du classe");
+            }
+        }
+    }
+
+    public function assignation()
+    {
+        if($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $ClasseId = $_POST['class_id'];
+            $FormateurId = $_POST['teacher_id'];
+
+            if($this->AdminService->AssignerFormateur($ClasseId,$FormateurId))
             {
                 header('Location: /admindash');
                 exit();
@@ -70,11 +90,13 @@ class AdminController extends Controller{
 
     public function index()
     {
-        $sprints = $this->SprintService->get_Sprints() ?? [];
+        $sprints = $this->AdminService->get_Sprints() ?? [];
         $users = $this->UserService->getUsers() ?? [];
+        $classes = $this->AdminService->get_Classes() ?? [];
         $this->render('admindash', [
                 'sprints' => $sprints,
-                'users' => $users
+                'users' => $users,
+                'classes' => $classes
             ]);
     }
 

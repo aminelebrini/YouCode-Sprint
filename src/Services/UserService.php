@@ -12,7 +12,8 @@ class UserService {
 
     public function login($email, $password) {
         $user = $this->userRepo->findByEmail($email);
-        if ($user && $user->getPassword() === $password) {
+
+        if (password_verify($password,$user->getPassword())) {
             return $user;
         }
         return null;
