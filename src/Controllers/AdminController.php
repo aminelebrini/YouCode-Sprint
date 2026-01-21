@@ -78,13 +78,13 @@ class AdminController extends Controller{
             $ClasseId = $_POST['class_id'];
             $FormateurId = $_POST['teacher_id'];
 
-            if($this->AdminService->AssignerFormateur($ClasseId,$FormateurId))
+            if(!$this->AdminService->AssignerFormateur($ClasseId,$FormateurId))
             {
-                header('Location: /admindash');
-                exit();
-            } else {
-                die("Erreur lors de l'ajout du classe");
+                die("Erreur lors de l'ajout du fromateur");
+                
             }
+            header('Location: /admindash');
+            exit();
         }
     }
 
