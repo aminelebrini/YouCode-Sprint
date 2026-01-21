@@ -1,62 +1,18 @@
 <?php
-namespace Repository;
-
+    namespace Repository;
 use Core\Data;
 use Models\Classe;
 use Models\Sprint;
 use Models\Competence;
 use PDO;
-
-class AdminRepository
+class FormateurRepository
 {
+
     private $conn;
 
     public function __construct()
     {
         $this->conn = Data::getInstance()->connection();
-    }
-
-    public function create_users($nom, $prenom, $role, $email, $password)
-    {
-        $passwordHach = password_hash($password, PASSWORD_BCRYPT);
-
-        $query = "INSERT INTO users (firstname, lastname, email, password, role) VALUES (?, ?, ?, ?, ?)";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute([$nom, $prenom, $email, $passwordHach, $role]);
-
-        if ($role === 'Formateur') {
-            $userId = $this->conn->lastInsertId(); 
-            $query = "INSERT INTO formateurs (user_id) VALUES (?)";
-            $stmt = $this->conn->prepare($query);
-            return $stmt->execute([$userId]);
-        }
-
-    }
-    public function Create_Classe($nom, $capacity, $annescolaire)
-    {
-        $query = "INSERT INTO classes (nom, nombre, promo, taux) VALUES (?, ?, ?, ?)";
-        $stmt = $this->conn->prepare($query);
-        return $stmt->execute([$nom, $capacity, $annescolaire, 0]);
-    }
-
-    public function addSprint($titre, $dateDebut, $dateFin)
-    {
-        $query = "INSERT INTO sprints (nom, date_debut, date_fin) VALUES (?, ?, ?)";
-        $stmt = $this->conn->prepare($query);
-        return $stmt->execute([$titre, $dateDebut, $dateFin]);
-    }
-
-    public function Assigne($ClasseId, $FormateurId)
-    {
-        $query = "INSERT INTO formateur_classe (formateur_id, classe_id) VALUES (?, ?)";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute([$FormateurId, $ClasseId]);
-    }
-    public function add_Skill($ComperenceName)
-    {
-        $query = "INSERT INTO competences (nom) VALUES (?)";
-        $statment = $this->conn->prepare($query);
-        $statment->execute([$ComperenceName]);
     }
     public function getSprint()
     {
@@ -124,4 +80,5 @@ class AdminRepository
         return $AllCompetences;
     }
 }
+
 ?>

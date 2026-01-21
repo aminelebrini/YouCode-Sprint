@@ -10,8 +10,9 @@
         private $taux;
         private $firstname;
         private $lastname;
+        private $formateurId;
 
-        public function __construct($id,$nom,$nombre,$promo,$taux,$firstname,$lastname)
+        public function __construct($id,$nom,$nombre,$promo,$taux,$firstname,$lastname,$formateurId)
         {
             $this->id = $id;
             $this->nom = $nom;
@@ -20,6 +21,7 @@
             $this->taux = $taux;
             $this->firstname = $firstname;
             $this->lastname = $lastname;
+            $this->formateurId = $formateurId;
         }
 
         public function getId()
@@ -49,6 +51,10 @@
         public function getFormateur()
         {
             return $this->firstname . " " . $this->lastname;
+        }
+        public function getFormateurId()
+        {
+            return $this->formateurId;
         }
 
     }
