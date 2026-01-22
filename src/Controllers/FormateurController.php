@@ -12,14 +12,36 @@ class FormateurController extends Controller
         $this->FormateurService = $services['formateur'];
     }
 
+    public function creer_brief()
+    {
+        $Titre = $_POST['titre'] ?? [];
+        $DateDebut = $_POST['date_debut'] ?? [];
+        $DateFin = $_POST['date_fin'] ?? [];
+        $SprintId = $_POST['sprint_id'] ?? [];
+        $type = $_POST['type'] ?? [];
+        $CompetenceId = $_POST['competence_ids'];
+        $Description = $_POST['description'];
+
+        if($this->FormateurService->CreateClasse($Titre,$DateDebut,$DateFin,$SprintId,$type,$CompetenceId,$Description))
+        {
+            header('Location: /formateurdash');
+            exit();
+        } else {
+            die("Erreur lors de l'ajout du Brief");
+        }
+    }
     public function index()
     {
         $users = $this->UserService->getUsers() ?? [];
         $classes = $this->FormateurService->get_Classes() ?? [];
+        $sprints = $this->FormateurService->get_Sprints() ?? [];
+        $competences = $this->FormateurService->get_Competence() ?? [];
         $this->render('formateurdash',[
             'title' => 'Formateur Dashboard',
             'users' => $users,
-            'classes' => $classes
+            'classes' => $classes,
+            'sprints' => $sprints,
+            'competences' => $competences
         ]);
     }
 }

@@ -48,7 +48,9 @@ CREATE TABLE briefs (
     nom VARCHAR(255) NOT NULL,
     description TEXT,
     type VARCHAR(50), 
-    sprint_id INT REFERENCES sprints(id) ON DELETE CASCADE
+    sprint_id INT REFERENCES sprints(id) ON DELETE CASCADE,
+    date_debut DATE,
+    date_fin DATE,
 );
 
 CREATE TABLE rendu (
