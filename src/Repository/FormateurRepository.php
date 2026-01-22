@@ -4,6 +4,7 @@ use Core\Data;
 use Models\Classe;
 use Models\Sprint;
 use Models\Competence;
+use Models\Brief;
 use PDO;
 class FormateurRepository
 {
@@ -118,14 +119,29 @@ class FormateurRepository
 
     public function getAllBriefs()
     {
-        $query = "SELECT b.* , cb.* FROM briefs as b inner join competence_brief as cb on b.id = cb.brief_id inner join competences as c on cb.competence_id = c.id";
+        $query = "SELECT b.* , cb.*, c.* FROM briefs as b inner join competence_brief as cb on b.id = cb.brief_id inner join competences as c on cb.competence_id = c.id";
         $statment = $this->conn->prepare($query);
         $statment->execute();
 
         $briefs = $statment->fetchAll(PDO::FETCH_ASSOC);
 
-        
+        $AllBriefs = [];
 
+        foreach($briefs as $brief)
+        {
+            $AllBriefs [] = new Brief(
+                $brief['id'],
+                $brief['titre'],
+                $brief['description'],
+                $brief['type'],
+                $brief['sprint_id'],
+                $brief['date_debut'],
+                $brief['date_fin'],
+                $brief['nom']
+            );
+
+        }
+        return $AllBriefs;
 
     }
 }

@@ -30,7 +30,7 @@
         {
             return $this->id;
         }
-        public function getNom()
+        public function getTitre()
         {
             return $this->nom;
         }
@@ -51,14 +51,6 @@
             return $this->date_debut;
         }
         public function getDateFin()
-        {
-            return $this->date_fin;
-        }
-        public function DateDebut()
-        {
-            return $this->date_debut;
-        }
-        public function DateFin()
         {
             return $this->date_fin;
         }

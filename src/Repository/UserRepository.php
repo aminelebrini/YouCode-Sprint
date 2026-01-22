@@ -3,6 +3,8 @@ namespace Repository;
 
 use Core\Data;
 use Models\User;
+use Models\Etudiant;
+use Models\Formateur;
 use PDO;
 
 class UserRepository {
@@ -18,8 +20,12 @@ class UserRepository {
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($user) {
-            return new User(
+        if (!$user) {
+            return null;
+        }
+
+        if ($user['role'] === 'ETUDIANT') {
+            return new Etudiant(
                 $user['id'],
                 $user['firstname'],
                 $user['lastname'],
@@ -28,7 +34,26 @@ class UserRepository {
                 $user['role']
             );
         }
-        return null;
+
+        if  ($user['role'] === 'FORMATEUR') {
+            return new Formateur(
+                $user['id'],
+                $user['firstname'],
+                $user['lastname'],
+                $user['email'],
+                $user['password'],
+                $user['role']
+            );
+        }
+
+        return new User(
+            $user['id'],
+            $user['firstname'],
+            $user['lastname'],
+            $user['email'],
+            $user['password'],
+            $user['role']
+        );
     }
 
     public function getAllUsers() {

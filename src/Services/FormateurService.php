@@ -31,5 +31,10 @@
             $comperences = $this->FormateurRepository->getCompetence();
             return $comperences ?? [];
         }
+        public function get_Brief()
+        {
+            $briefs = $this->FormateurRepository->getAllBriefs();
+            return $briefs ?? [];
+        }
     }
 ?>
