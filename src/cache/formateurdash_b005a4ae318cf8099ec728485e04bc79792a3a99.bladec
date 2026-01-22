@@ -149,7 +149,7 @@
  <button onclick="toggleModal('BriefModal')" class="text-white/20 hover:text-white transition-all"><i class="fas fa-times text-xl"></i></button>
  </div>
  
- <form class="space-y-6 text-left">
+ <form class="space-y-6 text-left" action="/creer_brief" method="POST">
  <div class="grid grid-cols-2 gap-4">
  <div class="space-y-2">
  <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2 italic">Titre du Projet</label>
@@ -167,7 +167,7 @@
 
  <div class="space-y-2">
  <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2 italic">Le Sprint</label>
- <select name="class_id" required
+ <select name="sprint_id" required
  class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-5 text-white outline-none focus:border-cyan-400/50 appearance-none cursor-pointer">
  <option value="" class="bg-zinc-900">Choisir une le Sprint...</option>
  <?php $__currentLoopData = $sprints; $this->addLoop($__currentLoopData);$this->getFirstLoop();
@@ -209,6 +209,11 @@
  <label class="flex items-center gap-3 cursor-pointer bg-white/5 p-3 rounded-xl border border-white/10 hover:border-cyan-400/40">
  <input type="checkbox" name="type[]" value="MySQL" class="accent-cyan-400">
  <span class="text-white text-sm">MySQL</span>
+ </label>
+
+ <label class="flex items-center gap-3 cursor-pointer bg-white/5 p-3 rounded-xl border border-white/10 hover:border-cyan-400/40">
+ <input type="checkbox" name="type[]" value="LINUX/SHELL" class="accent-cyan-400">
+ <span class="text-white text-sm">LINUX / SHELL</span>
  </label>
 
  <label class="flex items-center gap-3 cursor-pointer bg-white/5 p-3 rounded-xl border border-white/10 hover:border-cyan-400/40">
@@ -261,7 +266,7 @@
 
  <div class="space-y-2">
  <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2 italic">Description & Consignes</label>
- <textarea rows="4" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:border-cyan-400/50 transition-all"></textarea>
+ <textarea rows="4" name="description" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:border-cyan-400/50 transition-all"></textarea>
  </div>
 
  <button class="w-full bg-white text-black font-black py-4 rounded-2xl uppercase tracking-[0.3em] text-xs hover:bg-cyan-400 transition-all duration-500 shadow-[0_10px_30px_rgba(255,255,255,0.05)]">

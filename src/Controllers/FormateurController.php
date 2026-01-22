@@ -14,20 +14,23 @@ class FormateurController extends Controller
 
     public function creer_brief()
     {
-        $Titre = $_POST['titre'] ?? [];
-        $DateDebut = $_POST['date_debut'] ?? [];
-        $DateFin = $_POST['date_fin'] ?? [];
-        $SprintId = $_POST['sprint_id'] ?? [];
-        $type = $_POST['type'] ?? [];
-        $CompetenceId = $_POST['competence_ids'];
-        $Description = $_POST['description'];
-
-        if($this->FormateurService->CreateClasse($Titre,$DateDebut,$DateFin,$SprintId,$type,$CompetenceId,$Description))
+        if($_SERVER['REQUEST_METHOD'] === 'POST')    
         {
-            header('Location: /formateurdash');
-            exit();
-        } else {
-            die("Erreur lors de l'ajout du Brief");
+            $Titre = $_POST['titre'] ?? [];
+            $DateDebut = $_POST['date_debut'] ?? [];
+            $DateFin = $_POST['date_fin'] ?? [];
+            $SprintId = $_POST['sprint_id'] ?? [];
+            $type = $_POST['type'] ?? [];
+            $CompetenceId = $_POST['competence_ids'];
+            $Description = $_POST['description'];
+
+            if($this->FormateurService->CreateBrief($Titre,$DateDebut,$DateFin,$SprintId,$type,$CompetenceId,$Description))
+            {
+                header('Location: /formateurdash');
+                exit();
+            } else {
+                die("Erreur lors de l'ajout du Brief");
+            }
         }
     }
     public function index()

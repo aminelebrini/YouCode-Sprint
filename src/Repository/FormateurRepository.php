@@ -14,6 +14,42 @@ class FormateurRepository
     {
         $this->conn = Data::getInstance()->connection();
     }
+
+    public function Create_Brief($Titre,$DateDebut,$DateFin,$SprintId,$type,$CompetenceId,$Description)
+    {
+        $query = "INSERT INTO briefs (nom, description, type, sprint_id, date_debut, date_fin) VALUES(?,?,?,?,?,?)";
+        $statment = $this->conn->prepare($query);
+
+        if(is_array($type))
+        {
+            foreach($type as $Type)
+            {
+                $statment->execute([$Titre,$Description,$Type,$SprintId,$DateDebut,$DateFin]);
+            }
+        }
+        else{
+            $statment->execute([$Titre,$Description,$type,$SprintId,$DateDebut,$DateFin]);
+        }
+        $BriefId = $this->conn->lastInsertId();
+        $query = "INSERT INTO competence_brief (brief_id, competence_id) VALUES (?,?)";
+        $statment = $this->conn->prepare($query);
+
+        if(!is_array($CompetenceId))
+        {
+            $statment->execute([$BriefId,$CompetenceId]);
+        }else{
+            foreach($CompetenceId as $competenceid)
+            {
+                $statment->execute([$BriefId, $competenceid]);
+            }
+        }
+
+    }
+
+    // public function get_brief()
+    // {
+
+    // }
     public function getSprint()
     {
         $query = "SELECT * FROM sprints";
@@ -78,6 +114,19 @@ class FormateurRepository
         }
 
         return $AllCompetences;
+    }
+
+    public function getAllBriefs()
+    {
+        $query = "SELECT b.* , cb.* FROM briefs as b inner join competence_brief as cb on b.id = cb.brief_id inner join competences as c on cb.competence_id = c.id";
+        $statment = $this->conn->prepare($query);
+        $statment->execute();
+
+        $briefs = $statment->fetchAll(PDO::FETCH_ASSOC);
+
+        
+
+
     }
 }
 

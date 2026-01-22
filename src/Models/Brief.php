@@ -9,15 +9,21 @@
         private $description;
         private $type;
         private $sprintId;
+        private $competence;
+        private $date_debut;
+        private $date_fin;
 
 
-        public function __construct($id,$nom,$description, $type,$sprintId)
+        public function __construct($id,$nom,$description, $type,$sprintId,$date_debut,$date_fin,$competence)
         {
             $this->id = $id;
             $this->nom = $nom;
             $this->description = $description;
             $this->type = $type;
             $this->sprintId = $sprintId;
+            $this->date_debut = $date_debut;
+            $this->date_fin = $date_fin;
+            $this->competence = $competence;
         }
 
         public function getId()
@@ -39,6 +45,26 @@
         public function getSprint()
         {
             return $this->sprintId;
+        }
+        public function getDateDebut()
+        {
+            return $this->date_debut;
+        }
+        public function getDateFin()
+        {
+            return $this->date_fin;
+        }
+        public function DateDebut()
+        {
+            return $this->date_debut;
+        }
+        public function DateFin()
+        {
+            return $this->date_fin;
+        }
+        public function getCompetence()
+        {
+            return $this->competence;
         }
     }
 

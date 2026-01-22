@@ -117,8 +117,8 @@
                         <i class="fas fa-paper-plane"></i> Nouveau Brief
                     </button>
                 </div>
-                <!--exemple-->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                @foreach($briefs as $brief)
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="glass-card p-8 rounded-[2.5rem] group hover:border-cyan-400/50 transition-all duration-500 relative overflow-hidden">
                         <div class="absolute top-0 right-0 p-6">
                             <span class="px-3 py-1 bg-green-500/10 text-green-400 rounded-full text-[8px] font-black uppercase tracking-widest border border-green-500/20">Actif</span>
@@ -132,9 +132,9 @@
                             <div class="w-8 h-8 rounded-full border-2 border-zinc-900 bg-purple-500 text-white flex items-center justify-center text-[8px] font-black">PHP</div>
                             <div class="w-8 h-8 rounded-full border-2 border-zinc-900 bg-zinc-800 text-white/40 flex items-center justify-center text-[8px] font-black">+3</div>
                         </div>
-                        <button class="text-[10px] font-black text-cyan-400 uppercase tracking-widest hover:underline decoration-2 underline-offset-8">Gérer les rendus</button>
                     </div>
                 </div>
+                @endforeach
             </section>
 
         </main>
@@ -147,7 +147,7 @@
                 <button onclick="toggleModal('BriefModal')" class="text-white/20 hover:text-white transition-all"><i class="fas fa-times text-xl"></i></button>
             </div>
             
-            <form class="space-y-6 text-left">
+            <form class="space-y-6 text-left" action="/creer_brief" method="POST">
                 <div class="grid grid-cols-2 gap-4">
                     <div class="space-y-2">
                         <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2 italic">Titre du Projet</label>
@@ -202,9 +202,14 @@
                          <span class="text-white text-sm">PHP</span>
                         </label>
 
-                     <label class="flex items-center gap-3 cursor-pointer bg-white/5 p-3 rounded-xl border border-white/10 hover:border-cyan-400/40">
+                        <label class="flex items-center gap-3 cursor-pointer bg-white/5 p-3 rounded-xl border border-white/10 hover:border-cyan-400/40">
                          <input type="checkbox" name="type[]" value="MySQL" class="accent-cyan-400">
                             <span class="text-white text-sm">MySQL</span>
+                        </label>
+
+                        <label class="flex items-center gap-3 cursor-pointer bg-white/5 p-3 rounded-xl border border-white/10 hover:border-cyan-400/40">
+                         <input type="checkbox" name="type[]" value="LINUX/SHELL" class="accent-cyan-400">
+                            <span class="text-white text-sm">LINUX / SHELL</span>
                         </label>
 
                         <label class="flex items-center gap-3 cursor-pointer bg-white/5 p-3 rounded-xl border border-white/10 hover:border-cyan-400/40">

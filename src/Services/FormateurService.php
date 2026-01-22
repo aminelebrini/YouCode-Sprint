@@ -12,7 +12,10 @@
         {
             $this->FormateurRepository = $FormateurRepository;
         }
-
+        public function CreateBrief($Titre,$DateDebut,$DateFin,$SprintId,$type,$CompetenceId,$Description)
+        {
+            return $this->FormateurRepository->Create_Brief($Titre,$DateDebut,$DateFin,$SprintId,$type,$CompetenceId,$Description);
+        }
         public function get_Sprints()
         {
             $sprints = $this->FormateurRepository->getSprint();
