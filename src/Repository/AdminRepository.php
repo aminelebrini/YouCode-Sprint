@@ -29,7 +29,14 @@ class AdminRepository
             $query = "INSERT INTO formateurs (user_id) VALUES (?)";
             $stmt = $this->conn->prepare($query);
             return $stmt->execute([$userId]);
-        }
+        }elseif ($role === 'Etudiant') 
+        {
+            $username = strtolower($nom . $prenom);
+            $userId = $this->conn->lastInsertId(); 
+            $query = "INSERT INTO etudiants (user_id, username) VALUES (?, ?)";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([$userId, $username]);
+    }
 
     }
     public function Create_Classe($nom, $capacity, $annescolaire)

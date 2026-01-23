@@ -33,6 +33,28 @@ class FormateurController extends Controller
             }
         }
     }
+
+    public function assign_students()
+    {
+        if($_SERVER['REQUEST_METHOD'] === 'POST')    
+        {
+            $studentId = $_POST['student_id'] ?? null;
+            $classId   = $_POST['classes_id'] ?? null;
+
+            echo $studentId;
+            echo "<br>";
+            echo "form" . $classId;
+
+            if($this->FormateurService->AssignStudents($studentId,$classId))
+            {
+            header('Location: /formateurdash');
+            exit();
+            } else {
+                die("Erreur lors de l'ajout du Brief");
+            }
+        }
+
+    }
     public function index()
     {
         $users = $this->UserService->getUsers() ?? [];
@@ -40,6 +62,7 @@ class FormateurController extends Controller
         $sprints = $this->FormateurService->get_Sprints() ?? [];
         $competences = $this->FormateurService->get_Competence() ?? [];
         $briefs = $this->FormateurService->get_Brief() ?? [];
+        $etudiants = $this->FormateurService->get_Etudiant() ?? [];
 
         $this->render('formateurdash',[
             'title' => 'Formateur Dashboard',
@@ -47,7 +70,8 @@ class FormateurController extends Controller
             'classes' => $classes,
             'sprints' => $sprints,
             'competences' => $competences,
-            'briefs' => $briefs
+            'briefs' => $briefs,
+            'etudiants' => $etudiants
         ]);
     }
 }

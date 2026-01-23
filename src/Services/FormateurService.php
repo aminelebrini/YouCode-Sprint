@@ -16,6 +16,11 @@
         {
             return $this->FormateurRepository->Create_Brief($Titre,$DateDebut,$DateFin,$SprintId,$type,$CompetenceId,$Description);
         }
+
+        public function AssignStudents($studentId,$classId)
+        {
+            return $this->FormateurRepository->Assign_Students($studentId,$classId);
+        }
         public function get_Sprints()
         {
             $sprints = $this->FormateurRepository->getSprint();
@@ -35,6 +40,11 @@
         {
             $briefs = $this->FormateurRepository->getAllBriefs();
             return $briefs ?? [];
+        }
+        public function get_Etudiant()
+        {
+            $etudiants = $this->FormateurRepository->getEtudiant();
+            return $etudiants ?? [];
         }
     }
 ?>

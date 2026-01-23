@@ -318,7 +318,7 @@
  <div class="space-y-2">
  <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2">Rôle</label>
  <select name="role" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:border-cyan-400/50 transition-all appearance-none">
- <option value="Student" class="bg-zinc-900">Student</option>
+ <option value="Etudiant" class="bg-zinc-900">Etudiant</option>
  <option value="Formateur" class="bg-zinc-900">Formateur</option>
  </select>
  </div>

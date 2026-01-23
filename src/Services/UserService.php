@@ -10,14 +10,21 @@ class UserService {
         $this->userRepo = $repo;
     }
 
-    public function login($email, $password) {
+    public function login($email, $password)
+    {
         $user = $this->userRepo->findByEmail($email);
 
-        if (password_verify($password,$user->getPassword())) {
-            return $user;
+        if (!$user) {
+            return null;
         }
-        return null;
+
+        if (!password_verify($password, $user->getPassword())) {
+            return null; 
+        }
+
+        return $user;
     }
+
 
     public function getUsers() {
         return $this->userRepo->getAllUsers();
