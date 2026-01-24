@@ -5,6 +5,7 @@
     use Core\Data;
     use Models\Brief;
     use Models\Etudiant;
+    use Models\Classe;
     use PDO;
 
     class EtudiantRepository
@@ -111,6 +112,44 @@
         return $AllBriefs;
 
     }
+    public function getClasses()
+    {
+    $query = "
+        SELECT 
+            c.id   AS classe_id,
+            c.nom,
+            c.nombre,
+            c.promo,
+            c.taux,
+            u.firstname,
+            u.lastname,
+            u.id   AS formateur_id
+        FROM classes AS c
+        INNER JOIN formateur_classe AS fc ON c.id = fc.classe_id
+        INNER JOIN users AS u ON fc.formateur_id = u.id
+    ";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    $classes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $AllClasses = [];
+    foreach ($classes as $classe) {
+        $AllClasses[] = new Classe(
+            $classe['classe_id'],
+            $classe['nom'],
+            $classe['nombre'],
+            $classe['promo'],
+            $classe['taux'],
+            $classe['firstname'],
+            $classe['lastname'],
+            $classe['formateur_id']
+        );
     }
+
+    return $AllClasses;
+}
+
+}
 
 ?>

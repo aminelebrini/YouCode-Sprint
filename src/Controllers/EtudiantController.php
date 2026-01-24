@@ -15,7 +15,7 @@
     public function index()
     {
         // $users = $this->UserService->getUsers() ?? [];
-        // $classes = $this->FormateurService->get_Classes() ?? [];
+        $classes = $this->EtudiantService->get_Classes() ?? [];
         // $sprints = $this->FormateurService->get_Sprints() ?? [];
         // $competences = $this->FormateurService->get_Competence() ?? [];
         $briefs = $this->EtudiantService->get_Brief() ?? [];
@@ -24,7 +24,8 @@
         $this->render('etudiantdash',[
             'titre' => 'YouCode Student',
             'briefs' => $briefs,
-            'etudiants' => $etudiants
+            'etudiants' => $etudiants,
+            'classes' => $classes
         ]);
     }
  }

@@ -77,7 +77,7 @@ class FormateurRepository
     }
 
     public function getClasses()
-{
+    {
     $query = "
         SELECT 
             c.id   AS classe_id,

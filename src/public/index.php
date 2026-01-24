@@ -46,7 +46,7 @@ $router->get('/etudiantdash', 'Controllers\\EtudiantController@index', 'Etudiant
 
 $router->post('/get_profile', 'Controllers\\UserController@get_profile', 'Visiteur');
 $router->post('/logout', 'Controllers\\UserController@logout', 'Admin');
-$router->post('/logout', 'Controllers\\UserController@logout', 'Student');
+$router->post('/logout', 'Controllers\\UserController@logout', 'Etudiant');
 $router->post('/logout', 'Controllers\\UserController@logout', 'Formateur');
 $router->post('/CreateUser', 'Controllers\\AdminController@CreateUser', 'Admin');
 $router->post('/addSprint', 'Controllers\\AdminController@addSprint', 'Admin');

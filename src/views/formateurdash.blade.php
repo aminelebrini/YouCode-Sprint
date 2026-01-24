@@ -70,10 +70,12 @@
             <div class="glass-card rounded-[1.5rem] p-4 mb-8 flex justify-between items-center px-8 animate-fade-in">
                 <div class="flex flex-col">
                     <span class="text-[10px] text-cyan-400 font-black uppercase tracking-[0.3em]">Session Active</span>
+                    @foreach($etudiants as $etudiant)
                     @foreach($classes as $classe)
-                    @if($classe->getFormateurId() === $_SESSION['id'])
+                    @if($classe->getFormateurId() === $etudiant->getFormateurId())
                     <h2 class="text-white font-black uppercase tracking-widest text-sm italic">{{ $classe->getNom() }}</h2>
                     @endif
+                    @endforeach
                     @endforeach
                 </div>
                 <div class="flex items-center space-x-4 border-l border-white/10 pl-6">
@@ -118,7 +120,7 @@
                     </button>
                 </div>
                 @foreach($briefs as $brief)
-                @if($brief->getFomrateurId() === $_SESSION['id'])
+                @if($brief->getFormateurId() === $_SESSION['id'])
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">     
                     <div class="glass-card p-8 rounded-[2.5rem] group hover:border-cyan-400/50 transition-all duration-500 relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-6">

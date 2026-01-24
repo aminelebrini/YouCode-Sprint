@@ -21,6 +21,11 @@
             $etudiants = $this->FormateurRepository->getEtudiant();
             return $etudiants ?? [];
         }
+        public function get_Classes()
+        {
+            $classes = $this->FormateurRepository->getClasses();
+            return $classes ?? [];
+        }
     }
 
 ?>

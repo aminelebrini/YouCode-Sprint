@@ -121,7 +121,7 @@
  </div>
  <?php $__currentLoopData = $briefs; $this->addLoop($__currentLoopData);$this->getFirstLoop();
  foreach($__currentLoopData as $brief): $loop = $this->incrementLoopIndices();  ?>
- <?php if($brief->getFomrateurId() === $_SESSION['id']): ?>
+ <?php if($brief->getFormateurId() === $_SESSION['id']): ?>
  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">     
  <div class="glass-card p-8 rounded-[2.5rem] group hover:border-cyan-400/50 transition-all duration-500 relative overflow-hidden">
  <div class="absolute top-0 right-0 p-6">
