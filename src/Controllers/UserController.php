@@ -28,6 +28,10 @@ class UserController extends Controller {
                 } else if($user->getRole() === 'Formateur') {
                     header('Location: /formateurdash');
                     exit(); 
+                }else if($user->getRole() === 'Etudiant')
+                {
+                    header('Location: /etudiantdash');
+                    exit();
                 }
             } else {
                 header('Location: /home');

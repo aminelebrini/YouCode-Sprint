@@ -17,20 +17,20 @@ class FormateurRepository
         $this->conn = Data::getInstance()->connection();
     }
 
-    public function Create_Brief($Titre,$DateDebut,$DateFin,$SprintId,$type,$CompetenceId,$Description)
+    public function Create_Brief($Titre,$DateDebut,$DateFin,$SprintId,$type,$CompetenceId,$Description,$Formateur_id)
     {
-        $query = "INSERT INTO briefs (nom, description, type, sprint_id, date_debut, date_fin) VALUES(?,?,?,?,?,?)";
+        $query = "INSERT INTO briefs (titre, description, type, sprint_id, date_debut, date_fin,formateur_id) VALUES(?,?,?,?,?,?,?)";
         $statment = $this->conn->prepare($query);
 
         if(is_array($type))
         {
             foreach($type as $Type)
             {
-                $statment->execute([$Titre,$Description,$Type,$SprintId,$DateDebut,$DateFin]);
+                $statment->execute([$Titre,$Description,$Type,$SprintId,$DateDebut,$DateFin,$Formateur_id]);
             }
         }
         else{
-            $statment->execute([$Titre,$Description,$type,$SprintId,$DateDebut,$DateFin]);
+            $statment->execute([$Titre,$Description,$type,$SprintId,$DateDebut,$DateFin,$Formateur_id]);
         }
         $BriefId = $this->conn->lastInsertId();
         $query = "INSERT INTO competence_brief (brief_id, competence_id) VALUES (?,?)";
@@ -184,7 +184,27 @@ class FormateurRepository
     }
     public function getAllBriefs()
     {
-        $query = "SELECT b.* , cb.*, c.* FROM briefs as b inner join competence_brief as cb on b.id = cb.brief_id inner join competences as c on cb.competence_id = c.id";
+        $query = "SELECT 
+                b.id, 
+                b.titre, 
+                b.description, 
+                b.type, 
+                b.sprint_id, 
+                b.date_debut, 
+                b.date_fin, 
+                b.formateur_id,
+                STRING_AGG(c.nom, ', ') as all_competences 
+                FROM briefs b 
+                INNER JOIN competence_brief cb ON b.id = cb.brief_id 
+                INNER JOIN competences c ON cb.competence_id = c.id
+                GROUP BY 
+                b.id, 
+                b.titre, 
+                b.description, 
+                b.sprint_id, 
+                b.date_debut, 
+                b.date_fin, 
+                b.formateur_id";
         $statment = $this->conn->prepare($query);
         $statment->execute();
 
@@ -202,7 +222,8 @@ class FormateurRepository
                 $brief['sprint_id'],
                 $brief['date_debut'],
                 $brief['date_fin'],
-                $brief['nom']
+                $brief['all_competences'],
+                $brief['formateur_id']
             );
 
         }

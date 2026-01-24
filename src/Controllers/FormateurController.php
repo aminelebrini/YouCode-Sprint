@@ -23,8 +23,9 @@ class FormateurController extends Controller
             $type = $_POST['type'] ?? [];
             $CompetenceId = $_POST['competence_ids'];
             $Description = $_POST['description'];
+            $Formateur_id = $_POST['formateur_id'];
 
-            if($this->FormateurService->CreateBrief($Titre,$DateDebut,$DateFin,$SprintId,$type,$CompetenceId,$Description))
+            if($this->FormateurService->CreateBrief($Titre,$DateDebut,$DateFin,$SprintId,$type,$CompetenceId,$Description,$Formateur_id))
             {
                 header('Location: /formateurdash');
                 exit();

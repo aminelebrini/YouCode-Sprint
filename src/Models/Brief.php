@@ -12,9 +12,10 @@
         private $competence;
         private $date_debut;
         private $date_fin;
+        private $formateur_id;
 
 
-        public function __construct($id,$nom,$description, $type,$sprintId,$date_debut,$date_fin,$competence)
+        public function __construct($id,$nom,$description, $type,$sprintId,$date_debut,$date_fin,$competence,$formateur_id)
         {
             $this->id = $id;
             $this->nom = $nom;
@@ -24,6 +25,7 @@
             $this->date_debut = $date_debut;
             $this->date_fin = $date_fin;
             $this->competence = $competence;
+            $this->formateur_id = $formateur_id;
         }
 
         public function getId()
@@ -57,6 +59,11 @@
         public function getCompetence()
         {
             return $this->competence;
+        }
+
+        public function getFomrateurId()
+        {
+            return $this->formateur_id;
         }
     }
 

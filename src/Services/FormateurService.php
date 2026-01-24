@@ -12,9 +12,9 @@
         {
             $this->FormateurRepository = $FormateurRepository;
         }
-        public function CreateBrief($Titre,$DateDebut,$DateFin,$SprintId,$type,$CompetenceId,$Description)
+        public function CreateBrief($Titre,$DateDebut,$DateFin,$SprintId,$type,$CompetenceId,$Description,$Formateur_id)
         {
-            return $this->FormateurRepository->Create_Brief($Titre,$DateDebut,$DateFin,$SprintId,$type,$CompetenceId,$Description);
+            return $this->FormateurRepository->Create_Brief($Titre,$DateDebut,$DateFin,$SprintId,$type,$CompetenceId,$Description,$Formateur_id);
         }
 
         public function AssignStudents($studentId,$classId)

@@ -118,6 +118,7 @@
                     </button>
                 </div>
                 @foreach($briefs as $brief)
+                @if($brief->getFomrateurId() === $_SESSION['id'])
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">     
                     <div class="glass-card p-8 rounded-[2.5rem] group hover:border-cyan-400/50 transition-all duration-500 relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-6">
@@ -151,6 +152,7 @@
                 </div>
             </div>
         </div>
+        @endif
         @endforeach
         </section>
             <section id="students-list" class="animate-fade-in mt-12">
@@ -325,7 +327,7 @@
                         @endforeach
                     </div>
                 </div>
-
+                <input type="hidden" name="formateur_id" value="{{ $_SESSION['id'] }}">
                 <div class="space-y-2">
                     <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2 italic">Description & Consignes</label>
                     <textarea rows="4" name="description" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:border-cyan-400/50 transition-all"></textarea>
@@ -351,8 +353,6 @@
         </div>
 
         <form action="/assign_students" method="POST" class="flex flex-col flex-1 overflow-hidden">
-            
-            <!-- Sélection de l'étudiant -->
             <div class="pt-4 border-t border-white/5">
                 <label class="text-cyan-400/60 text-[10px] font-black uppercase tracking-[0.3em] mb-2 block ml-2">
                     <i class="fas fa-users mr-2"></i> Choisir l'Étudiant

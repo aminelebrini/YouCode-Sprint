@@ -37,6 +37,7 @@ $router->get('/', 'Controllers\\HomeController@index', 'Visiteur');
 $router->get('/admindash', 'Controllers\\UserController@index', 'Admin');
 $router->get('/admindash', 'Controllers\\AdminController@index', 'Admin');
 $router->get('/formateurdash', 'Controllers\\FormateurController@index', 'Formateur');
+$router->get('/etudiantdash', 'Controllers\\EtudiantController@index', 'Etudiant');
 
 $router->post('/get_profile', 'Controllers\\UserController@get_profile', 'Visiteur');
 $router->post('/logout', 'Controllers\\UserController@logout', 'Admin');
