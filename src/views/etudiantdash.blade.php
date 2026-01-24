@@ -33,13 +33,9 @@
                     <i class="fas fa-terminal"></i>
                     <span>Mon Dashboard</span>
                 </a>
-                <a href="#" class="flex items-center space-x-4 text-cyan-400 bg-white/5 px-6 py-4 rounded-2xl font-black uppercase tracking-widest text-xs transition-all">
+                <a href="#" class="flex items-center space-x-4 text-cyan-400 bg-white/5 px-6 py-4 rounded-2xl font-black uppercase tracking-widest text-xs transition-all border border-cyan-400/20">
                     <i class="fas fa-layer-group"></i>
                     <span>Mes Briefs</span>
-                </a>
-                <a href="#" class="flex items-center space-x-4 text-cyan-400 bg-white/5 px-6 py-4 rounded-2xl font-black uppercase tracking-widest text-xs transition-all">
-                    <i class="fas fa-medal"></i>
-                    <span>Compétences</span>
                 </a>
             </nav>
 
@@ -64,9 +60,10 @@
                 <div class="flex items-center space-x-4 border-l border-white/10 pl-6">
                     <div class="text-right">
                         <p class="text-[10px] text-white/40 uppercase font-bold tracking-widest">Apprenant</p>
+                        <p class="text-xs font-black text-white uppercase italic">{{ $_SESSION['firstname'] ?? 'User' }}</p>
                     </div>
                     <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 p-0.5 shadow-[0_0_15px_rgba(34,211,238,0.3)]">
-                        <img src="https://ui-avatars.com/api/?name={{ $_SESSION['firstname'] }}&background=000&color=fff" class="rounded-lg" alt="avatar">
+                        <img src="https://ui-avatars.com/api/?name={{ $_SESSION['firstname'] ?? 'U' }}&background=000&color=fff" class="rounded-lg" alt="avatar">
                     </div>
                 </div>
             </div>
@@ -74,63 +71,57 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 animate-fade-in">
                 <div class="glass-card p-6 rounded-[2rem] border-l-4 border-l-cyan-400">
                     <p class="text-white/40 text-[9px] uppercase font-black tracking-widest mb-1">Briefs Reçus</p>
+                    <h3 class="text-2xl font-black italic">{{ 5 }}</h3>
                 </div>
                 <div class="glass-card p-6 rounded-[2rem] border-l-4 border-l-yellow-500">
-                    <p class="text-white/40 text-[9px] uppercase font-black tracking-widest mb-1">Rendus en cours</p>
+                    <p class="text-white/40 text-[9px] uppercase font-black tracking-widest mb-1">En cours</p>
                     <h3 class="text-2xl font-black italic">02</h3>
                 </div>
                 <div class="glass-card p-6 rounded-[2rem] border-l-4 border-l-green-500">
-                    <p class="text-white/40 text-[9px] uppercase font-black tracking-widest mb-1">Skills Validés</p>
+                    <p class="text-white/40 text-[9px] uppercase font-black tracking-widest mb-1">Validés</p>
                     <h3 class="text-2xl font-black italic">14</h3>
                 </div>
             </div>
 
-            <section class="mb-8 animate-fade-in" style="animation-delay: 0.2s;">
-                <div class="flex justify-between items-center mb-6 px-4 border-b border-white/5 pb-4">
-                    <h2 class="text-cyan-400 font-black uppercase tracking-[0.3em] text-lg italic">
-                        <i class="fas fa-bolt mr-3 shadow-cyan-400"></i>Briefs à Réaliser
-                    </h2>
+            <section class="mb-8 animate-fade-in">
+                <div class="mb-6 px-4">
+                    <h2 class="text-cyan-400 font-black uppercase tracking-[0.3em] text-lg italic"><i class="fas fa-bolt mr-3"></i>Tes Briefs Actuels</h2>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">     
+                    @foreach($etudiants as $etudiant)
                     @foreach($briefs as $brief)
-                    <div class="glass-card p-8 rounded-[2.5rem] group hover:border-cyan-400/50 transition-all duration-500 relative overflow-hidden flex flex-col justify-between h-full">
-                        <div class="absolute top-0 right-0 p-6">
-                            <span class="flex h-3 w-3">
-                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-400"></span>
-                            </span>
+                    @if($brief->getFormateurId() === $etudiant->getFormateurId() && $etudiant->getId() === $_SESSION['id'])
+                    <div class="glass-card p-8 rounded-[2.5rem] group hover:border-cyan-400/50 transition-all duration-500 relative flex flex-col justify-between">
+                        <div class="absolute top-0 right-0 p-6 text-[8px] font-black uppercase tracking-widest text-green-400 bg-green-500/10 rounded-bl-2xl border-l border-b border-green-500/20">
+                            Actif
                         </div>
-
+                        
                         <div>
                             <h4 class="text-xl font-black text-white uppercase mb-3 group-hover:text-cyan-400 transition-colors italic">
                                 {{ $brief->getTitre() }}
                             </h4>
-                            <div class="space-y-2 text-[11px] text-white/70 mb-4">
+                            <div class="space-y-2 text-[11px] text-white/70 mb-6">
                                 <p><span class="text-cyan-400 font-bold uppercase">Tech:</span> {{ $brief->getType() }}</p>
                                 <p><span class="text-cyan-400 font-bold uppercase">Deadline:</span> <span class="text-red-400">{{ $brief->getDateFin() }}</span></p>
                             </div>
-                            <p class="text-[11px] text-white/40 line-clamp-3 mb-6 italic uppercase leading-relaxed">
-                                {{ $brief->getDescription() }}
-                            </p>
                         </div>
 
-                        <div class="border-t border-white/5 pt-6 mt-auto">
+                        <div class="border-t border-white/5 pt-6">
                             <div class="flex flex-wrap gap-2 mb-6">
                                 @php $skills = explode(',', $brief->getCompetence()); @endphp
-                                @foreach($skills as $skill)
-                                <div class="px-3 py-1 rounded-full bg-cyan-400/10 text-cyan-300 text-[8px] font-black uppercase tracking-widest border border-cyan-400/20">
-                                    {{ trim($skill) }}
+                                <div class="px-3 py-1 rounded-full bg-cyan-400/10 text-cyan-300 text-[9px] font-black uppercase tracking-widest border border-cyan-400/20">
                                 </div>
-                                @endforeach
                             </div>
                             
                             <button onclick="openRenduModal('{{ $brief->getId() }}', '{{ $brief->getTitre() }}')" 
-                                    class="w-full bg-white text-black font-black py-4 rounded-2xl uppercase tracking-[0.2em] text-[10px] hover:bg-cyan-400 transition-all shadow-[0_10px_20px_rgba(255,255,255,0.05)]">
-                                <i class="fas fa-cloud-upload-alt mr-2"></i> Soumettre le Rendu
+                                    class="w-full bg-white text-black font-black py-4 rounded-xl uppercase tracking-widest text-[10px] hover:bg-cyan-400 transition-all shadow-[0_10px_20px_rgba(255,255,255,0.05)]">
+                                <i class="fas fa-cloud-upload-alt mr-2"></i> Soumettre mon rendu
                             </button>
                         </div>
                     </div>
+                    @endif
+                    @endforeach
                     @endforeach
                 </div>
             </section>
@@ -141,7 +132,7 @@
         <div class="glass-card w-full max-w-lg p-10 rounded-[2.5rem] border border-cyan-400/30 animate-fade-in">
             <div class="flex justify-between items-center mb-8">
                 <div>
-                    <h3 class="text-white text-2xl font-black italic uppercase tracking-tighter">Dépôt du <span class="text-cyan-400">Projet</span></h3>
+                    <h3 class="text-white text-2xl font-black italic uppercase tracking-tighter">Soumettre <span class="text-cyan-400">Projet</span></h3>
                     <p id="modalBriefName" class="text-cyan-400/40 text-[9px] font-black uppercase mt-1 italic tracking-widest"></p>
                 </div>
                 <button onclick="toggleModal('RenduModal')" class="text-white/20 hover:text-white transition-all"><i class="fas fa-times text-xl"></i></button>
@@ -151,7 +142,7 @@
                 <input type="hidden" name="brief_id" id="rendu_brief_id">
                 
                 <div class="space-y-2">
-                    <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2 italic">Lien du Repository (GitHub / Vercel)</label>
+                    <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2 italic text-left block">Lien du Repository (GitHub / Vercel)</label>
                     <div class="relative">
                         <i class="fab fa-github absolute left-5 top-1/2 -translate-y-1/2 text-white/20"></i>
                         <input type="url" name="lien_rendu" required placeholder="https://github.com/..." 
@@ -160,12 +151,12 @@
                 </div>
 
                 <div class="space-y-2">
-                    <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2 italic">Message au Formateur</label>
-                    <textarea name="commentaire" rows="3" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:border-cyan-400/50 transition-all" placeholder="Optionnel..."></textarea>
+                    <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2 italic text-left block">Message au Formateur</label>
+                    <textarea name="commentaire" rows="3" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:border-cyan-400/50 transition-all" placeholder="Une précision ?"></textarea>
                 </div>
 
                 <button class="w-full bg-white text-black font-black py-5 rounded-2xl uppercase tracking-[0.3em] text-xs hover:bg-cyan-400 transition-all duration-500">
-                    Finaliser la Soumission
+                    Confirmer l'envoi
                 </button>
             </form>
         </div>

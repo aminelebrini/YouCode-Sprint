@@ -61,7 +61,7 @@
             return $this->competence;
         }
 
-        public function getFomrateurId()
+        public function getFormateurId()
         {
             return $this->formateur_id;
         }

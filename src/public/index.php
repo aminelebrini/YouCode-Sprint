@@ -8,10 +8,12 @@ use Core\Data;
 use Repository\UserRepository;
 use Repository\AdminRepository;
 use Repository\FormateurRepository;
+use Repository\EtudiantRepository;
 
 use Services\UserService;
 use Services\AdminService;
 USE Services\FormateurService;
+use Services\EtudiantService;
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
@@ -21,15 +23,18 @@ $db = Data::getInstance()->connection();
 $userRepo = new UserRepository($db);
 $adminRepo = new AdminRepository($db);
 $formateurRepo = new FormateurRepository($db);
+$etudiantrepo = new EtudiantRepository($db);
 
 $userService = new UserService($userRepo);
 $adminService = new AdminService($adminRepo);
 $formateurService = new FormateurService($formateurRepo);
+$etudiantservice = new EtudiantService($etudiantrepo);
 
 $router = new Router([
     'user' => $userService,
     'admin' => $adminService,
     'formateur' => $formateurService,
+    'etudiant' => $etudiantservice
 ]);
 
 
