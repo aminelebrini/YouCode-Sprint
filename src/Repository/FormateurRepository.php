@@ -234,9 +234,14 @@ class FormateurRepository
 
     public function getAll_Rendu()
     {
-        $query = "SELECT u.firstname , u.lastname, r.link, r.text , r.date_soumission,
-        b.titre, b.formateur_id from users as u inner join rendu_etudiant as re on u.id = re.etudiant_id 
-        inner join rendu as r on r.id = re.rendu_id inner join briefs as b on b.id = re.brief_id";
+        $query = "SELECT u.firstname , u.lastname, r.id AS rendu_id, r.link, r.text , r.date_soumission,
+        b.titre, b.formateur_id, c.id as comp_id, cb.brief_id 
+		from users as u 
+		inner join rendu_etudiant as re on u.id = re.etudiant_id 
+        inner join rendu as r on r.id = re.rendu_id 
+		inner join briefs as b on b.id = re.brief_id 
+		inner join competence_brief AS cb on b.id = cb.brief_id 
+		inner join competences as c on c.id = cb.competence_id";
 
         $statment = $this->conn->prepare($query);
         $statment->execute();
@@ -245,16 +250,24 @@ class FormateurRepository
 
         $AllRendus = [];
 
+        
         foreach($Rendus as $rendus)
         {
-            $AllRendus [] = new Rendu(
+            $renduId = $rendus['rendu_id']; 
+
+            if (in_array($renduId, $Rendus)) {
+                continue;
+            }
+                            
+                $AllRendus [] = new Rendu(
                 $rendus['titre'],
                 $rendus['link'],
                 $rendus['text'],
                 $rendus['firstname'],
                 $rendus['lastname'],
                 $rendus['date_soumission'],
-                $rendus['formateur_id']
+                $rendus['formateur_id'],
+                [$rendus['comp_id']]
             );
         }
         

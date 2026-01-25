@@ -11,8 +11,9 @@ class Rendu
     private $student_lastname;
     private $date_soumission;
     private $prof_id;
+    private $Competences;
 
-    public function __construct($brief_name, $link, $commentaire, $student_firstname, $student_lastname, $date_soumission,$prof_id)
+    public function __construct($brief_name, $link, $commentaire, $student_firstname, $student_lastname, $date_soumission,$prof_id,array $Competences)
     {
         $this->brief_name = $brief_name;
         $this->link = $link;
@@ -21,6 +22,7 @@ class Rendu
         $this->student_lastname = $student_lastname;
         $this->date_soumission = $date_soumission;
         $this->prof_id = $prof_id;
+        $this->Competences = $Competences;
     }
 
     public function getBriefName()
@@ -61,6 +63,12 @@ class Rendu
     public function getFormateurId()
     {
         return $this->prof_id;
+    }
+    public function getCompetenceId(): array {
+        if (is_array($this->Competences)) {
+            return $this->Competences;
+        }
+        return [$this->Competences]; 
     }
 }
 
