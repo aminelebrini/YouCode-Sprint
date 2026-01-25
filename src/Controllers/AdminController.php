@@ -105,6 +105,11 @@ class AdminController extends Controller{
     
     }
 
+    public function modifier_info()
+    {
+        
+    }
+
 
     public function index()
     {

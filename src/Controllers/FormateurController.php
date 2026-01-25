@@ -64,6 +64,7 @@ class FormateurController extends Controller
         $competences = $this->FormateurService->get_Competence() ?? [];
         $briefs = $this->FormateurService->get_Brief() ?? [];
         $etudiants = $this->FormateurService->get_Etudiant() ?? [];
+        $rendus = $this->FormateurService->getAllRendu() ?? [];
 
         $this->render('formateurdash',[
             'title' => 'Formateur Dashboard',
@@ -72,7 +73,8 @@ class FormateurController extends Controller
             'sprints' => $sprints,
             'competences' => $competences,
             'briefs' => $briefs,
-            'etudiants' => $etudiants
+            'etudiants' => $etudiants,
+            'rendus' => $rendus
         ]);
     }
 }

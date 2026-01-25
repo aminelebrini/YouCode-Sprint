@@ -11,6 +11,11 @@
         {
             $this->FormateurRepository = $FormateurRepository;
         }
+        public function SoumettreRendu($brief_id,$etudiant_id,$lien,$commentaire)
+        {
+            return $this->FormateurRepository->Soumettre_Rendu($brief_id,$etudiant_id,$lien,$commentaire);
+        }
+
         public function get_Brief()
         {
             $briefs = $this->FormateurRepository->getAllBriefs();

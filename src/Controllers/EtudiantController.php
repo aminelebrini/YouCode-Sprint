@@ -12,6 +12,25 @@
         parent::__construct();
         $this->EtudiantService = $services['etudiant'];
     }
+
+    public function soumettre_rendu()
+    {
+        if($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $brief_id = $_POST['brief_id'];
+            $etudiant_id = $_POST['etudiant_id'];
+            $lien = $_POST['lien_rendu'];
+            $commentaire = $_POST['commentaire'];
+
+            if($this->EtudiantService->SoumettreRendu($brief_id,$etudiant_id,$lien,$commentaire))
+            {
+                die("Erreur lors de l'ajout du rendu");
+                
+            }
+            header('Location: /etudiantdash');
+            exit();
+        }
+    }
     public function index()
     {
         // $users = $this->UserService->getUsers() ?? [];

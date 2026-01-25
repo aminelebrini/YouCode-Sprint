@@ -46,5 +46,10 @@
             $etudiants = $this->FormateurRepository->getEtudiant();
             return $etudiants ?? [];
         }
+        public function getAllRendu()
+        {
+            $rendus = $this->FormateurRepository->getAll_Rendu();
+            return $rendus ?? [];
+        }
     }
 ?>

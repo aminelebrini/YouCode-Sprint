@@ -206,7 +206,62 @@
                 @endif
                 @endforeach
             </tbody>
-        </table>
+                    </table>
+                </div>
+            </section>
+            <section class="mb-8 animate-fade-in" style="animation-delay: 0.4s;">
+                <div class="mb-6 px-4 flex justify-between items-center">
+                    @foreach($rendus as $rendu)
+                    @if($rendu->getFormateurId() === $_SESSION['id'])
+                    <h2 class="text-cyan-400 font-black uppercase tracking-[0.3em] text-lg italic">
+                        <i class="fas fa-history mr-3"></i>Historique des Rendus
+                    </h2>
+                </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <div class="glass-card p-6 rounded-[2rem] border-t-2 border-cyan-400/30 hover:border-cyan-400 transition-all duration-300">
+            <div class="flex justify-between items-center mb-4">
+                <div class="w-10 h-10 rounded-xl bg-cyan-400/10 flex items-center justify-center text-cyan-400 border border-cyan-400/20">
+                    <i class="fab fa-github text-xl"></i>
+                </div>
+                <h3 class="text-[10px] text-cyan-400 font-black uppercase tracking-[0.2em] italic">
+                    {{ $rendu->getFullName() }}
+                </h3>
+                <span class="px-3 py-1 bg-cyan-400/10 text-cyan-400 rounded-full text-[8px] font-black uppercase tracking-widest border border-cyan-400/20">
+                    Envoyé
+                </span>
+            </div>
+
+            <h4 class="text-white font-black uppercase text-sm mb-1 italic truncate">
+                {{ $rendu->getBriefName() }}
+            </h4>
+            <p class="text-[9px] text-white/40 font-bold uppercase tracking-widest mb-4">
+                Soumis le : <span class="text-white/60">{{ $rendu->getDateSoumission() }}</span>
+            </p>
+
+            <div class="space-y-3">
+                <a href="{{ $rendu->getLink() }}" target="_blank" class="flex items-center justify-between p-3 bg-white/5 rounded-xl border border-white/5 hover:bg-white/10 transition-all group">
+                    <span class="text-[10px] font-bold text-white/60 group-hover:text-cyan-400 uppercase italic">Voir le code</span>
+                    <i class="fas fa-external-link-alt text-[10px] text-white/20 group-hover:text-cyan-400"></i>
+                </a>
+                
+                @if($rendu->getCommentaire())
+                <div class="p-3 bg-black/20 rounded-xl border border-white/5">
+                    <p class="text-[15px] text-white italic leading-relaxed">
+                        <i class="fas fa-quote-left mr-1 opacity-30"></i>
+                        {{ $rendu->getCommentaire() }}
+                    </p>
+                </div>
+                @endif
+            </div>
+            <div>
+                <button class="w-full bg-white text-black font-black py-5 rounded-2xl uppercase tracking-[0.3em] text-xs hover:bg-cyan-400 transition-all duration-500">
+                    Envoye la Correction
+                </button>
+            </div>
+        </div>
+        @endif
+        @endforeach
     </div>
 </section>
         </main>

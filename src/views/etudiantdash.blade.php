@@ -13,6 +13,8 @@
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: #050505; }
         ::-webkit-scrollbar-thumb { background: #22d3ee; border-radius: 10px; }
+        /* Style pour éviter que le clic sur le bouton Rendu n'ouvre le brief */
+        .no-bubble { pointer-events: auto; }
     </style>
 </head>
 <body class="bg-cyan-900 bg-cover bg-center bg-no-repeat min-h-screen font-sans text-white overflow-hidden">
@@ -55,34 +57,34 @@
                 <div class="flex flex-col">
                     <span class="text-[10px] text-cyan-400 font-black uppercase tracking-[0.3em]">Promotion Active</span>
                     @foreach($etudiants as $etudiant)
-                    @foreach($classes as $classe)
-                    @if($etudiant->getFormateurId() === $classe->getFormateurId() && $etudiant->getId() === $_SESSION['id'])
-                    <h2 class="text-white font-black uppercase tracking-widest text-sm italic">
-                        {{ $classe->getNom() }}
-                    </h2>
-                    @endif
-                    @endforeach
+                        @foreach($classes as $classe)
+                            @if($etudiant->getFormateurId() === $classe->getFormateurId() && $etudiant->getId() === $_SESSION['id'])
+                            <h2 class="text-white font-black uppercase tracking-widest text-sm italic">
+                                {{ $classe->getNom() }}
+                            </h2>
+                            @endif
+                        @endforeach
                     @endforeach
                 </div>
                 <div class="flex items-center space-x-4 border-l border-white/10 pl-6">
                     @foreach($etudiants as $etudiant)
-                    @if($etudiant->getId() === $_SESSION['id'])
-                        <div class="text-right">
-                            <p class="text-[10px] text-white/40 uppercase font-bold tracking-widest">Etudiant</p>
-                            <p class="text-xs font-black text-white uppercase italic">{{ $etudiant->getFirstname() . " " . $etudiant->getLastname() ?? 'User' }}</p>
-                        </div>
-                    @endif
+                        @if($etudiant->getId() === $_SESSION['id'])
+                            <div class="text-right">
+                                <p class="text-[10px] text-white/40 uppercase font-bold tracking-widest">Etudiant</p>
+                                <p class="text-xs font-black text-white uppercase italic">{{ $etudiant->getFirstname() . " " . $etudiant->getLastname() ?? 'User' }}</p>
+                            </div>
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 p-0.5 shadow-[0_0_15px_rgba(34,211,238,0.3)]">
+                                <img src="https://ui-avatars.com/api/?name={{ $etudiant->getFirstname() . ' ' . $etudiant->getLastname() }}&background=000&color=fff" class="rounded-lg" alt="avatar">
+                            </div>
+                        @endif
                     @endforeach
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 p-0.5 shadow-[0_0_15px_rgba(34,211,238,0.3)]">
-                        <img src="https://ui-avatars.com/api/?name={{ $etudiant->getFirstname() . ' ' . $etudiant->getLastname() ?? 'U' }}&background=000&color=fff" class="rounded-lg" alt="avatar">
-                    </div>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 animate-fade-in">
                 <div class="glass-card p-6 rounded-[2rem] border-l-4 border-l-cyan-400">
                     <p class="text-white/40 text-[9px] uppercase font-black tracking-widest mb-1">Briefs Reçus</p>
-                    <h3 class="text-2xl font-black italic">{{ 5 }}</h3>
+                    <h3 class="text-2xl font-black italic">05</h3>
                 </div>
                 <div class="glass-card p-6 rounded-[2rem] border-l-4 border-l-yellow-500">
                     <p class="text-white/40 text-[9px] uppercase font-black tracking-widest mb-1">En cours</p>
@@ -101,57 +103,65 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">     
                     @foreach($etudiants as $etudiant)
-                    @foreach($briefs as $brief)
-                    @if($brief->getFormateurId() === $etudiant->getFormateurId() && $etudiant->getId() === $_SESSION['id'])
-                    <div data-id="{{ $brief->getId() }}" data-titre="{{ addslashes($brief->getTitre()) }}" data-description="{{ $brief->getDescription() }}" data-type="{{ $brief->getType() }}" data-competence="{{ $brief->getCompetence() }}" data-debut="{{ $brief->getDateDebut() }}" data-fin="{{ $brief->getDateFin() }}" onclick="OpenModal(this)" class="glass-card p-8 rounded-[2.5rem] group hover:border-cyan-400/50 transition-all duration-500 relative flex flex-col justify-between">
-                        <div class="absolute top-0 right-0 p-6 text-[8px] font-black uppercase tracking-widest text-green-400 bg-green-500/10 rounded-bl-2xl border-l border-b border-green-500/20">
-                            Actif
-                        </div>
-                        
-                        <div>
-                            <h4 class="text-xl font-black text-white uppercase mb-3 group-hover:text-cyan-400 transition-colors italic">
-                                {{ $brief->getTitre() }}
-                            </h4>
-                            <div class="space-y-2 text-[11px] text-white/70 mb-6">
-                                <p><span class="text-cyan-400 font-bold uppercase">Tech:</span> {{ $brief->getType() }}</p>
-                                <p><span class="text-cyan-400 font-bold uppercase">Deadline:</span> <span class="text-red-400">{{ $brief->getDateFin() }}</span></p>
-                            </div>
-                        </div>
+                        @foreach($briefs as $brief)
+                            @if($brief->getFormateurId() === $etudiant->getFormateurId() && $etudiant->getId() === $_SESSION['id'])
+                            <div data-id="{{ $brief->getId() }}" 
+                                data-titre="{{ addslashes($brief->getTitre()) }}" 
+                                data-description="{{ $brief->getDescription() }}" 
+                                data-type="{{ $brief->getType() }}" 
+                                data-competence="{{ $brief->getCompetence() }}" 
+                                data-debut="{{ $brief->getDateDebut() }}" 
+                                data-fin="{{ $brief->getDateFin() }}" 
+                                onclick="OpenModal(this)" 
+                                class="glass-card p-8 rounded-[2.5rem] group hover:border-cyan-400/50 transition-all duration-500 relative flex flex-col justify-between cursor-pointer">
+                                <div class="absolute top-0 right-0 p-6 text-[8px] font-black uppercase tracking-widest text-green-400 bg-green-500/10 rounded-bl-2xl border-l border-b border-green-500/20">
+                                    Actif
+                                </div>
+                                
+                                <div>
+                                    <h4 class="text-xl font-black text-white uppercase mb-3 group-hover:text-cyan-400 transition-colors italic">
+                                        {{ $brief->getTitre() }}
+                                    </h4>
+                                    <div class="space-y-2 text-[11px] text-white/70 mb-6">
+                                        <p><span class="text-cyan-400 font-bold uppercase">Tech:</span> {{ $brief->getType() }}</p>
+                                        <p><span class="text-cyan-400 font-bold uppercase">Deadline:</span> <span class="text-red-400 font-black">{{ $brief->getDateFin() }}</span></p>
+                                    </div>
+                                </div>
 
-                        <div class="border-t border-white/5 pt-6">
-                            <div class="flex flex-wrap gap-2 mb-6">
-                                <div class="px-3 py-1 rounded-full bg-cyan-400/10 text-cyan-300 text-[9px] font-black uppercase tracking-widest border border-cyan-400/20">
-                                    {{ $brief->getCompetence() }}
+                                <div class="border-t border-white/5 pt-6">
+                                    <div class="flex flex-wrap gap-2 mb-6">
+                                        <div class="px-3 py-1 rounded-full bg-cyan-400/10 text-cyan-300 text-[9px] font-black uppercase tracking-widest border border-cyan-400/20">
+                                            {{ $brief->getCompetence() }}
+                                        </div>
+                                    </div>
+                                    
+                                    <button onclick="event.stopPropagation(); openRenduModal('{{ $brief->getId() }}', '{{ addslashes($brief->getTitre()) }}')" 
+                                            class="no-bubble w-full bg-white text-black font-black py-4 rounded-xl uppercase tracking-widest text-[10px] hover:bg-cyan-400 transition-all shadow-[0_10px_20px_rgba(255,255,255,0.05)]">
+                                        <i class="fas fa-cloud-upload-alt mr-2"></i> Soumettre mon rendu
+                                    </button>
+                                </div>
                             </div>
-                            </div>
-                            
-                            <button onclick="openRenduModal('{{ $brief->getId() }}', '{{ $brief->getTitre() }}')" 
-                                    class="w-full bg-white text-black font-black py-4 rounded-xl uppercase tracking-widest text-[10px] hover:bg-cyan-400 transition-all shadow-[0_10px_20px_rgba(255,255,255,0.05)]">
-                                <i class="fas fa-cloud-upload-alt mr-2"></i> Soumettre mon rendu
-                            </button>
-                        </div>
-                    </div>
-                    @endif
-                    @endforeach
+                            @endif
+                        @endforeach
                     @endforeach
                 </div>
             </section>
         </main>
     </div>
 
-    <div id="RenduModal" class="hidden fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
+    <div id="RenduModal" class="hidden fixed inset-0 bg-black/90 backdrop-blur-md z-[70] flex items-center justify-center p-4">
         <div class="glass-card w-full max-w-lg p-10 rounded-[2.5rem] border border-cyan-400/30 animate-fade-in">
-            <div class="flex justify-between items-center mb-8">
+            <div class="flex justify-between items-center mb-8 text-left">
                 <div>
                     <h3 class="text-white text-2xl font-black italic uppercase tracking-tighter">Soumettre <span class="text-cyan-400">Projet</span></h3>
                     <p id="modalBriefName" class="text-cyan-400/40 text-[9px] font-black uppercase mt-1 italic tracking-widest"></p>
                 </div>
-                <button class="text-white/20 hover:text-white transition-all"><i class="fas fa-times text-xl"></i></button>
+                <button onclick="toggleModal('RenduModal')" class="text-white/20 hover:text-white transition-all"><i class="fas fa-times text-xl"></i></button>
             </div>
             
             <form action="/soumettre_rendu" method="POST" class="space-y-6">
                 <input type="hidden" name="brief_id" id="rendu_brief_id">
-                
+                <input type="hidden" name="etudiant_id" id="etudiant_id" value="{{ $_SESSION['id'] }}">
                 <div class="space-y-2">
                     <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2 italic text-left block">Lien du Repository (GitHub / Vercel)</label>
                     <div class="relative">
@@ -160,91 +170,82 @@
                                class="w-full bg-white/5 border border-white/10 rounded-2xl py-5 pl-14 pr-5 text-white outline-none focus:border-cyan-400/50 transition-all">
                     </div>
                 </div>
-
                 <div class="space-y-2">
                     <label class="text-cyan-400/60 text-[9px] font-black uppercase tracking-widest ml-2 italic text-left block">Message au Formateur</label>
                     <textarea name="commentaire" rows="3" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white outline-none focus:border-cyan-400/50 transition-all" placeholder="Une précision ?"></textarea>
                 </div>
-
                 <button class="w-full bg-white text-black font-black py-5 rounded-2xl uppercase tracking-[0.3em] text-xs hover:bg-cyan-400 transition-all duration-500">
                     Confirmer l'envoi
                 </button>
             </form>
         </div>
     </div>
+
     <div id="ContenuModal" class="hidden fixed inset-0 bg-black/95 backdrop-blur-xl z-[60] flex items-center justify-center p-4">
-    <div class="glass-card w-full max-w-4xl p-0 rounded-[3rem] border-cyan-400/30 animate-fade-in shadow-[0_0_100px_rgba(34,211,238,0.15)] overflow-hidden flex flex-col max-h-[90vh]">
-        
-        <div class="p-8 border-b border-white/5 flex justify-between items-center bg-white/[0.02]">
-            <div>
-                <h3 id="modalTitle" class="text-2xl font-black italic uppercase text-cyan-400 mb-6"></h3>
-            </div>
-            <button onclick="toggleModal('ContenuModal')" class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-white/40 hover:text-white hover:bg-red-500/20 transition-all border border-white/5">
-                <i class="fas fa-times text-xl"></i>
-            </button>
-        </div>
-
-        <div class="p-8 md:p-12 overflow-y-auto custom-scrollbar space-y-10 text-left">
+        <div class="glass-card w-full max-w-4xl p-0 rounded-[3rem] border-cyan-400/30 animate-fade-in shadow-[0_0_100px_rgba(34,211,238,0.15)] overflow-hidden flex flex-col max-h-[90vh]">
             
-            <div class="space-y-4">
-                <h4 class="text-cyan-400 text-xs font-black uppercase tracking-[0.4em] flex items-center gap-3 italic">
-                    <i class="fas fa-terminal"></i> Description du Projet
-                </h4>
-                <div id="modalBriefDesc" class="text-white/70 text-sm md:text-base leading-[2] font-medium italic bg-white/[0.01] p-6 rounded-3xl border border-white/5 whitespace-pre-line">
-                </div>
+            <div class="p-8 border-b border-white/5 flex justify-between items-center bg-white/[0.02]">
+                <h3 id="modalTitle" class="text-2xl font-black italic uppercase text-cyan-400"></h3>
+                <button onclick="toggleModal('ContenuModal')" class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-white/40 hover:text-white hover:bg-red-500/20 transition-all border border-white/5">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="p-8 md:p-12 overflow-y-auto custom-scrollbar space-y-10 text-left">
                 <div class="space-y-4">
-                    <h4 class="text-cyan-400 text-xs font-black uppercase tracking-[0.4em] italic">
-                        <i class="fas fa-code"></i> Technologies
+                    <h4 class="text-cyan-400 text-xs font-black uppercase tracking-[0.4em] flex items-center gap-3 italic">
+                        <i class="fas fa-terminal"></i> Description du Projet
                     </h4>
-                    <div id="modalBriefTech" class="flex flex-wrap gap-2">
-                    </div>
+                    <div id="modalBriefDesc" class="text-white/70 text-sm md:text-base leading-[2] font-medium italic bg-white/[0.01] p-6 rounded-3xl border border-white/5 whitespace-pre-line"></div>
                 </div>
 
-                <div class="space-y-4">
-                    <h4 class="text-cyan-400 text-xs font-black uppercase tracking-[0.4em] italic">
-                        <i class="fas fa-code"></i> Competences visée
-                    </h4>
-                    <div id="modalBriefComp" class="flex flex-wrap gap-2">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <h4 class="text-cyan-400 text-xs font-black uppercase tracking-[0.4em] italic"><i class="fas fa-code mr-2"></i> Technologies</h4>
+                        <div id="modalBriefTech" class="text-white font-bold uppercase tracking-widest text-xs bg-white/5 p-4 rounded-2xl border border-white/5"></div>
                     </div>
-                </div>
-
-                <div class="space-y-4">
-                    <h4 class="text-green-400 text-xs font-black uppercase tracking-[0.4em] italic">
-                        <i class="fas fa-calendar-alt"></i> Date de Lancement
-                    </h4>
-                    <div class="bg-green-500/5 border border-red-500/10 p-4 rounded-2xl">
-                        <p id="modaldatedebut" class="text-xl font-black italic text-white uppercase tracking-widest"></p>
+                    <div class="space-y-4">
+                        <h4 class="text-cyan-400 text-xs font-black uppercase tracking-[0.4em] italic"><i class="fas fa-medal mr-2"></i> Compétences visées</h4>
+                        <div id="modalBriefComp" class="text-white font-bold uppercase tracking-widest text-xs bg-white/5 p-4 rounded-2xl border border-white/5"></div>
                     </div>
-                </div>
-                <div class="space-y-4">
-                    <h4 class="text-red-400 text-xs font-black uppercase tracking-[0.4em] italic">
-                        <i class="fas fa-calendar-alt"></i> Date de livraison
-                    </h4>
-                    <div class="bg-red-500/5 border border-red-500/10 p-4 rounded-2xl">
-                        <p id="modaldatefin" class="text-xl font-black italic text-white uppercase tracking-widest"></p>
+                    <div class="space-y-4">
+                        <h4 class="text-green-400 text-xs font-black uppercase tracking-[0.4em] italic"><i class="fas fa-calendar-check mr-2"></i> Date de Lancement</h4>
+                        <div class="bg-green-500/5 border border-green-500/10 p-4 rounded-2xl text-center">
+                            <p id="modaldatedebut" class="text-xl font-black italic text-white uppercase tracking-widest"></p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <h4 class="text-red-400 text-xs font-black uppercase tracking-[0.4em] italic"><i class="fas fa-calendar-times mr-2"></i> Date de livraison</h4>
+                        <div class="bg-red-500/5 border border-red-500/10 p-4 rounded-2xl text-center">
+                            <p id="modaldatefin" class="text-xl font-black italic text-white uppercase tracking-widest"></p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
     <script>
         function toggleModal(id) {
-            document.getElementById(id).classList.toggle('hidden');
+            const modal = document.getElementById(id);
+            if(modal) modal.classList.toggle('hidden');
         }
-        function OpenModal(element)
-        {
+
+        function OpenModal(element) {
             document.getElementById('modalTitle').innerText = element.getAttribute('data-titre');
             document.getElementById('modalBriefDesc').innerText = element.getAttribute('data-description');
             document.getElementById('modalBriefTech').innerText = element.getAttribute('data-type');
-            document.getElementById('modalBriefComp').innerText = element.getAttribute('data-competence')
+            document.getElementById('modalBriefComp').innerText = element.getAttribute('data-competence');
             document.getElementById('modaldatedebut').innerText = element.getAttribute('data-debut');
             document.getElementById('modaldatefin').innerText = element.getAttribute('data-fin');
 
-            document.getElementById('ContenuModal').classList.remove('hidden');
+            toggleModal('ContenuModal');
+        }
+
+        function openRenduModal(id, title) {
+            document.getElementById('rendu_brief_id').value = id;
+            document.getElementById('modalBriefName').innerText = title;
+            toggleModal('RenduModal');
         }
     </script>
 </body>

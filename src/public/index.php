@@ -55,6 +55,7 @@ $router->post('/assignation','Controllers\\AdminController@assignation', 'Admin'
 $router->post('/add_skill','Controllers\\AdminController@add_skill', 'Admin');
 $router->post('/creer_brief', 'Controllers\\FormateurController@creer_brief', 'Formateur');
 $router->post('/assign_students', 'Controllers\\FormateurController@assign_students', 'Formateur');
+$router->post('/soumettre_rendu','Controllers\\EtudiantController@soumettre_rendu', 'Etudiant');
 
 
 

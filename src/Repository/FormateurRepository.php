@@ -6,6 +6,7 @@ use Models\Sprint;
 use Models\Competence;
 use Models\Brief;
 use Models\Etudiant;
+use Models\Rendu;
 use PDO;
 class FormateurRepository
 {
@@ -47,7 +48,7 @@ class FormateurRepository
         }
 
     }
-
+    
     public function Assign_Students($studentId,$classId)
     {
         $query = "UPDATE etudiants SET classe_id = ? WHERE user_id = ?";
@@ -228,6 +229,36 @@ class FormateurRepository
 
         }
         return $AllBriefs;
+
+    }
+
+    public function getAll_Rendu()
+    {
+        $query = "SELECT u.firstname , u.lastname, r.link, r.text , r.date_soumission,
+        b.titre, b.formateur_id from users as u inner join rendu_etudiant as re on u.id = re.etudiant_id 
+        inner join rendu as r on r.id = re.rendu_id inner join briefs as b on b.id = re.brief_id";
+
+        $statment = $this->conn->prepare($query);
+        $statment->execute();
+
+        $Rendus = $statment->fetchAll(PDO::FETCH_ASSOC);
+
+        $AllRendus = [];
+
+        foreach($Rendus as $rendus)
+        {
+            $AllRendus [] = new Rendu(
+                $rendus['titre'],
+                $rendus['link'],
+                $rendus['text'],
+                $rendus['firstname'],
+                $rendus['lastname'],
+                $rendus['date_soumission'],
+                $rendus['formateur_id']
+            );
+        }
+        
+        return $AllRendus;
 
     }
 }

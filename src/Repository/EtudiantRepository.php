@@ -16,6 +16,18 @@
         {
             $this->conn = Data::getInstance()->connection();
         }
+        public function Soumettre_Rendu($brief_id,$etudiant_id,$lien,$commentaire)
+        {
+            $query = "INSERT INTO rendu (text,link) VALUES (?,?)";
+            $statment = $this->conn->prepare($query);
+            $statment->execute([$commentaire,$lien]);
+
+            $renduId = $this->conn->lastInsertId();
+            $queryrendu = "INSERT INTO rendu_etudiant (etudiant_id, rendu_id, brief_id) VALUES (?,?,?)";
+            $stmt = $this->conn->prepare($queryrendu);
+            $stmt->execute([$etudiant_id,$renduId,$brief_id]); 
+
+        }
         public function getEtudiant()
         {
             $query = "SELECT 
